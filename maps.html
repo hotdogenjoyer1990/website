@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EUCompetitive</title>
+
+<!-- Czcionka Roboto -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;800&display=swap" rel="stylesheet" />
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="logo.png" type="image/png" />
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(135deg, #131313 0%, #2d2d2d 100%);
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.navbar {
+  position: relative;
+  width: 100%;
+  background-color: #2c2c2c;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.navbar img {
+  height: 50px;
+  z-index: 2;
+}
+
+.nav-buttons {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
+  z-index: 1;
+}
+
+.nav-button {
+  background-color: #ffd700;
+  color: black;
+  font-weight: bold;
+  padding: 15px 15px;
+  text-decoration: none;
+  border-radius: 6px;
+  min-width: 120px;
+  text-align: center;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.nav-button:hover {
+  opacity: 0.9;
+  transform: scale(1.03);
+}
+
+.social-icons {
+  margin-left: auto;
+  display: flex;
+  gap: 15px;
+}
+
+.social-link {
+  color: #ffd700;
+  font-size: 24px;
+  transition: transform 0.2s ease, opacity 0.2s;
+}
+
+.social-link:hover {
+  transform: scale(1.2);
+  opacity: 0.9;
+}
+
+/* Style dla widoku chapters */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+h1 {
+  text-align: center;
+  margin: 40px 0 30px 0;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  font-size: 2.2em;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.breadcrumb-item {
+  color: #ffd700;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.breadcrumb-item:hover {
+  color: #ffed4e;
+}
+
+.breadcrumb-separator {
+  color: #888;
+}
+
+.back-button {
+  background: #424242;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.back-button:hover {
+  transform: translateY(-2px);
+  background: #777;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: #333;
+  border: 2px solid #ffd700;
+  border-radius: 12px;
+  min-height: 200px;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+}
+
+.card:hover {
+  box-shadow: 0 0 15px 4px #ffd700;
+}
+
+.card h2 {
+  font-weight: bold;
+  font-size: 32px;
+  color: white;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  text-shadow:
+     -1px -1px 0 black,
+      1px -1px 0 black,
+     -1px  1px 0 black,
+      1px  1px 0 black,
+     -1px  0   0 black,
+      1px  0   0 black,
+      0   1px  0 black,
+      0  -1px  0 black;
+  z-index: 1;
+  position: relative;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 0;
+  transition: background-color 0.3s ease;
+}
+
+.card:hover::before {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Tła dla chapterów */
+.card.chapter1 { background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('CH1.png'); }
+.card.chapter2 { background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('CH2.png'); }
+.card.chapter3 { background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('CH3.png'); }
+.card.chapter4 { background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('CH4.png'); }
+.card.chapter5 { background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('CH5.png'); }
+.card.chapter6 { background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('CH6.png'); }
+
+.card.chapter1,
+.card.chapter2,
+.card.chapter3,
+.card.chapter4,
+.card.chapter5,
+.card.chapter6 {
+  background-size: cover;
+  background-position: center;
+}
+
+.card.unavailable {
+  background: linear-gradient(135deg, #4a4a4a, #666);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.card.unavailable:hover {
+  transform: none;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.seasons-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 kolumny */
+  gap: 20px; /* odstęp między kafelkami */
+  padding: 20px;
+}
+
+
+
+.tournament-card {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 107, 107, 0.05));
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.tournament-card:hover {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 107, 107, 0.1));
+  border-color: #ff6b6b;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(255, 107, 107, 0.3);
+}
+
+.tournament-card h4 {
+  color: #ff6b6b;
+  margin-bottom: 5px;
+  font-size: 1.1em;
+}
+
+.tournament-card p {
+  color: #ccc;
+  font-size: 0.85em;
+}
+
+/* Style dla widoku turniejów w stylu FNCS */
+.main-wrapper {
+  display: flex;
+  flex-grow: 1;
+  height: calc(100vh - 80px);
+  overflow: hidden;
+}
+
+.sidebar {
+      width: 300px;
+      background-color: #2c2c2c;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar button {
+      width: 100%;
+      font-size: 14px;
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 12px;
+      color: #ffd700;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar button:hover {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+      border-color: #ffd700;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .sidebar button.active {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.2));
+      border-color: #ffd700;
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+    }
+
+    .sidebar button:disabled {
+      background: linear-gradient(135deg, rgba(102, 102, 102, 0.1), rgba(102, 102, 102, 0.05));
+      border: 1px solid rgba(102, 102, 102, 0.3);
+      color: #999;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .sidebar button:disabled:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+/* Stylizacja przycisku "Back to Seasons" */
+.sidebar button.back-to-seasons {
+  background-color: #474747;
+  color: white;
+}
+
+.sidebar button.back-to-seasons:hover {
+  background-color: #777;
+  opacity: 1;
+}
+
+.main-content {
+  display: flex;
+  flex-grow: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  align-items: flex-start;
+  overflow: hidden;
+  width: 100%;
+}
+
+.table-container {
+  max-width: 100vw;
+  overflow-x: auto;
+  overflow-y: auto;
+  margin-left: 40px;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 1.2;
+  box-sizing: border-box;
+  max-height: calc(100vh - 120px);
+}
+
+.table-container.has-content {
+  background: black;
+  border: 1px solid #ffd700;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+table {
+  width: 450px;
+  border-collapse: collapse;
+  color: white;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  table-layout: auto;
+}
+
+th, td {
+  padding: 8px 12px;
+  border: 1px solid #ffd700;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+th {
+  background-color: #333;
+}
+
+th:first-child, td:first-child {
+  width: 40px;
+  white-space: nowrap;
+}
+
+th.team-cell,
+td.team-cell {
+  text-align: center !important;
+  vertical-align: middle !important;
+  white-space: normal;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.right-image {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding-left: 40px;
+  max-height: calc(100vh - 120px);
+  box-sizing: border-box;
+}
+
+.right-image img {
+  max-height: calc(100vh - 120px);
+  width: auto;
+  border: 1px solid #ffd700;
+  border-radius: 12px;
+  object-fit: contain;
+  display: block;
+}
+
+.placeholder-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.placeholder-wrapper img {
+  filter: blur(4px);
+  display: block;
+  border-radius: 12px;
+  max-width: 100%;
+}
+
+.placeholder-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffd700;
+  font-weight: 800;
+  font-size: 24px;
+  text-shadow: 1px 1px 4px black;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.map-details {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.map-image {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 10px;
+  margin: 20px auto;
+  display: block;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.map-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.info-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.info-label {
+  color: #ffd700;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.footer {
+  max-width: 75%;
+  margin: 180px auto 20px auto;
+  text-align: right;
+  color: #aaaaaa;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.footer-line {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 10px;
+}
+
+/* Scrollbar styles */
+.table-container::-webkit-scrollbar {
+  height: 8px;
+  background-color: #2c2c2c;
+  border-radius: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #ffd700;
+  border-radius: 8px;
+  border: 2px solid #2c2c2c;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background-color: #e6c200;
+}
+
+.table-container {
+  scrollbar-color: #ffd700 #2c2c2c;
+  scrollbar-width: thin;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+  background-color: #2c2c2c;
+  border-radius: 8px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #ffd700;
+  border-radius: 8px;
+  border: 2px solid #2c2c2c;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background-color: #e6c200;
+}
+
+.sidebar {
+  scrollbar-color: #ffd700 #2c2c2c;
+  scrollbar-width: thin;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    padding: 10px;
+  }
+
+  .navbar img {
+    margin-bottom: 10px;
+  }
+
+  .nav-buttons {
+    position: static;
+    transform: none;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .social-icons {
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    margin: 20px;
+  }
+
+  .main-wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+  }
+
+  .main-content {
+    flex-direction: column;
+  }
+
+  .table-container {
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+
+  .right-image {
+    padding-left: 0;
+  }
+}
+
+
+/* Replace the existing .season-card styles with these */
+.season-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 3px solid #ffd700;
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+}
+
+.season-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+}
+
+.season-card img {
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
+
+/* Info section at bottom */
+.season-card .season-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: rgba(94, 94, 94, 0.5);
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.season-card .season-name {
+  color: #ffd700;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.season-card .season-description {
+  color: #cccccc;
+  font-size: 0.85rem;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.navbar img {
+      height: 70px;
+      z-index: 2;
+    }
+
+    .logo-text {
+  font-size: 30px;
+  font-weight: bold;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+}
+</style>
+</head>
+<body>
+
+  <div class="navbar">
+    <img src="logo.png" alt="logo" />
+    <span class="logo-text">EUCompetitive</span>
+
+<div class="nav-buttons">
+  <a href="index.html" class="nav-button">HOME</a>
+  <a href="globals-map.html" class="nav-button">GLOBALS MAP</a>
+  <a href="globals-teams.html" class="nav-button">GLOBAL TEAMS</a>
+  <a href="fncs.html" class="nav-button">FNCS</a>
+  <a href="tournaments.html" class="nav-button">SCHEDULE</a>
+  <a href="stats.html" class="nav-button">STATS</a>
+</div>
+
+<div class="social-icons">
+  <a href="https://x.com/kxrr0" target="_blank" class="social-link">
+    <i class="fab fa-x-twitter"></i>
+  </a>
+  <a href="https://www.twitch.tv/kxrr0" target="_blank" class="social-link">
+    <i class="fab fa-twitch"></i>
+  </a>
+  <a href="https://discord.gg/zGuzHT6y" target="_blank" class="social-link">
+    <i class="fab fa-discord"></i>
+  </a>
+</div>
+</div>
+
+<!-- Chapters View -->
+<div id="chapters-view">
+  <div class="container">
+    <h1 id="main-title">TOURNAMENT MAPS</h1>
+
+    <!-- Back Button (Only visible when not on main page) -->
+    <button class="back-button" id="back-button" style="display: none;" onclick="goBack()">
+      <i class="fas fa-arrow-left"></i> Back to Chapters
+    </button>
+
+    <!-- Main Content -->
+    <div id="content">
+      <!-- Chapters Grid -->
+      <div class="grid" id="chapters-grid">
+        <div class="card chapter1" onclick="showSeasons(1)">
+          <h2>Chapter 1</h2>
+        </div>
+        <div class="card chapter2" onclick="showSeasons(2)">
+          <h2>Chapter 2</h2>
+        </div>
+        <div class="card chapter3" onclick="showSeasons(3)">
+          <h2>Chapter 3</h2>
+        </div>
+        <div class="card chapter4" onclick="showSeasons(4)">
+          <h2>Chapter 4</h2>
+        </div>
+        <div class="card chapter5" onclick="showSeasons(5)">
+          <h2>Chapter 5</h2>
+        </div>
+        <div class="card chapter6" onclick="showSeasons(6)">
+          <h2>Chapter 6</h2>
+        </div>
+      </div>
+
+      <!-- Seasons Content (Hidden by default) -->
+      <div id="seasons-content" style="display: none;">
+        <div class="seasons-grid" id="seasons-grid"></div>
+      </div>
+
+      <!-- Map Details Content (Hidden by default) -->
+      <div id="map-content" style="display: none;">
+        <div class="map-details" id="map-details"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer" id="footer">
+    <hr class="footer-line" />
+    <p>
+      Fortnite is a registered trademark of Epic Games.<br>
+      EUCompetitive is not associated or endorsed by Epic Games.
+    </p>
+  </footer>
+</div>
+
+<!-- Tournaments View (FNCS Style) -->
+<div id="tournaments-view" style="display: none;">
+  <div class="main-wrapper">
+    <div class="sidebar" id="tournaments-sidebar">
+      <!-- Tournaments buttons will be generated here -->
+    </div>
+  
+    <div class="main-content">
+      <div class="table-container" id="tournament-content-area">
+        <!-- Tournament content will be displayed here -->
+      </div>
+      <div class="right-image" id="tournament-right-image">
+        <!-- Tournament images will be displayed here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Stan aplikacji
+let currentView = 'chapters';
+let currentChapter = null;
+let currentSeason = null;
+let currentTournament = null;
+
+// Mapowanie obrazów dla turniejów
+const tournamentImages = {
+  // Chapter 1
+  'ch1_sx_fncs': 'mapplaceholder.png',
+  'ch1_sx_cash_cup_w1': 'mapplaceholder.png',
+  'ch1_sx_cash_cup_w2': 'mapplaceholder.png',
+  'ch1_sx_cash_cup_w3': 'mapplaceholder.png',
+  'ch1_sx_cash_cup_w4': 'mapplaceholder.png',
+  'ch1_sx_performance_w1': 'mapplaceholder.png',
+  'ch1_sx_performance_w2': 'mapplaceholder.png',
+  
+  // Chapter 2
+  'ch2_s1_fncs': 'mapplaceholder.png',
+  'ch2_s1_cash_cup': 'mapplaceholder.png',
+  'ch2_s1_performance': 'mapplaceholder.png',
+  'ch2_s2_fncs': 'CH2S2GRANDS.png',
+  'ch2_s2_cash_cup': 'mapplaceholder.png',
+  'ch2_s2_invitational': 'mapplaceholder.png',
+  'ch2_s3_fncs': 'mapplaceholder.png',
+  'ch2_s3_cash_cup': 'mapplaceholder.png',
+  'ch2_s3_performance': 'mapplaceholder.png',
+  'ch2_s4_fncs': 'CH2S4GRANDS.png',
+  'ch2_s4_marvel_cup': 'mapplaceholder.png',
+  'ch2_s4_cash_cup': 'mapplaceholder.png',
+  'ch2_s5_fncs': 'CH2S5GRANDS.png',
+  'ch2_s5_cash_cup': 'mapplaceholder.png',
+  'ch2_s5_performance': 'mapplaceholder.png',
+  'ch2_s6_fncs': 'CH2S6GRANDS.png',
+  'ch2_s6_cash_cup': 'mapplaceholder.png',
+  'ch2_s6_primal_cup': 'mapplaceholder.png',
+  'ch2_s7_fncs': 'CH2S7GRANDS.png',
+  'ch2_s7_cash_cup': 'mapplaceholder.png',
+  'ch2_s7_ufo_cup': 'mapplaceholder.png',
+  'ch2_s8_fncs': 'CH2S8GRANDS.png',
+  'ch2_s8_cash_cup': 'mapplaceholder.png',
+  'ch2_s8_performance': 'mapplaceholder.png',
+  
+  // Chapter 3
+  'ch3_s1_fncs': 'CH3S1GRANDS.png',
+  'ch3_s1_cash_cup': 'mapplaceholder.png',
+  'ch3_s1_performance': 'mapplaceholder.png',
+  'ch3_s2_fncs': 'CH3S2GRANDS.png',
+  'ch3_s2_cash_cup': 'mapplaceholder.png',
+  'ch3_s2_resistance_cup': 'mapplaceholder.png',
+  'ch3_s3_fncs': 'CH3S3GRANDS.png',
+  'ch3_s3_cash_cup': 'mapplaceholder.png',
+  'ch3_s3_summer_cup': 'mapplaceholder.png',
+  'ch3_s4_fncs': 'mapplaceholder.png',
+  'ch3_s4_cash_cup': 'mapplaceholder.png',
+  'ch3_s4_performance': 'mapplaceholder.png',
+  
+  // Chapter 4
+  'ch4_s1_fncs': 'CH4S1GRANDS.png',
+  'ch4_s1_cash_cup': 'mapplaceholder.png',
+  'ch4_s1_performance': 'mapplaceholder.png',
+  'ch4_s2_fncs': 'CH4S2GRANDS.png',
+  'ch4_s2_cash_cup': 'mapplaceholder.png',
+  'ch4_s2_mega_cup': 'mapplaceholder.png',
+  'ch4_s3_fncs': 'mapplaceholder.png',
+  'ch4_s3_cash_cup': 'mapplaceholder.png',
+  'ch4_s3_wilds_cup': 'mapplaceholder.png',
+  'ch4_s4_fncs': 'mapplaceholder.png',
+  'ch4_s4_cash_cup': 'mapplaceholder.png',
+  'ch4_s4_performance': 'mapplaceholder.png',
+  
+  // Chapter 5
+  'ch5_s1_fncs': 'mapplaceholder.png',
+  'ch5_s1_cash_cup': 'mapplaceholder.png',
+  'ch5_s1_performance': 'mapplaceholder.png',
+  'ch5_s2_fncs': 'mapplaceholder.png',
+  'ch5_s2_cash_cup': 'mapplaceholder.png',
+  'ch5_s2_myths_cup': 'mapplaceholder.png',
+  'ch5_s3_fncs': 'mapplaceholder.png',
+  'ch5_s3_cash_cup': 'mapplaceholder.png',
+  'ch5_s3_performance': 'mapplaceholder.png',
+  'ch5_s4_fncs': 'mapplaceholder.png',
+  'ch5_s4_doom_cup': 'mapplaceholder.png',
+  'ch5_s4_cash_cup': 'mapplaceholder.png',
+  
+  // Chapter 6
+  'ch6_s1_fncs': 'mapplaceholder.png',
+  'ch6_s1_cash_cup': 'mapplaceholder.png',
+  'ch6_s1_performance': 'mapplaceholder.png',
+  'ch6_s2_fncs': 'mapplaceholder.png',
+  'ch6_s2_cash_cup': 'mapplaceholder.png',
+  'ch6_s2_performance': 'mapplaceholder.png',
+  'ch6_sms1_mini_fncs': 'mapplaceholder.png',
+  'ch6_sms1_special_cup': 'mapplaceholder.png',
+  'ch6_s3_fncs': 'mapplaceholder.png',
+  'ch6_s3_cash_cup': 'mapplaceholder.png',
+  'ch6_s3_performance': 'mapplaceholder.png',
+  'ch6_s4_fncs': 'mapplaceholder.png',
+  'ch6_s4_cash_cup': 'mapplaceholder.png',
+  'ch6_s4_performance': 'mapplaceholder.png'
+};
+
+// Dane o sezonach dla każdego chaptera
+
+// Obrazki dla sezonów
+const seasonImages = {
+  "chapter1": {
+    "Season X": "img/ch1_sx.png",
+    "Season 9": "img/ch1_s9.png"
+  },
+  "chapter2": {
+    "Season 2": "img/ch2_s2.png",
+    "Season 4": "img/ch2_s4.png"
+  },
+  "chapter3": {
+    "Season 1": "img/ch3_s1.png",
+    "Season 2": "img/ch3_s2.png"
+  }
+  // itd. dla pozostałych chapterów
+};
+
+const chaptersData = {
+  1: {
+    name: 'Chapter 1',
+    seasons: [
+      { 
+        id: 'SX', 
+        name: 'Season X', 
+        description: 'Out of Time', 
+        image: 'CH1.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', editions: null, key: 'ch1_sx_fncs' },
+          { 
+            id: 'cash_cup', 
+            name: 'Duo Cash Cup Finals', 
+            description: 'Finał Cash Cup w duos',
+            editions: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+            keys: ['ch1_sx_cash_cup_w1', 'ch1_sx_cash_cup_w2', 'ch1_sx_cash_cup_w3', 'ch1_sx_cash_cup_w4']
+          },
+          { 
+            id: 'performance', 
+            name: 'Performance Evaluation Cup', 
+            description: 'Turniej oceny wydajności',
+            editions: ['Week 1', 'Week 2'],
+            keys: ['ch1_sx_performance_w1', 'ch1_sx_performance_w2']
+          }
+        ]
+      }
+    ]
+  },
+  2: {
+    name: 'Chapter 2',
+    seasons: [
+      { 
+        id: 'S1', 
+        name: 'Season 1', 
+        description: 'New World', 
+        image: 'CH2.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch2_s1_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch2_s1_cash_cup' },
+          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch2_s1_performance' }
+        ]
+      },
+      { 
+        id: 'S2', 
+        name: 'Season 2', 
+        description: 'Top Secret', 
+        image: 'CH2.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch2_s2_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch2_s2_cash_cup' },
+          { id: 'invitational', name: 'Invitational Cup', description: 'Turniej na zaproszenia', key: 'ch2_s2_invitational' }
+        ]
+      },
+      { 
+        id: 'S3', 
+        name: 'Season 3', 
+        description: 'Splashdown', 
+        image: 'CH2.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch2_s3_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch2_s3_cash_cup' },
+          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch2_s3_performance' }
+        ]
+      },
+      { 
+        id: 'S4', 
+        name: 'Season 4', 
+        description: 'Nexus War', 
+        image: 'CH2.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch2_s4_fncs' },
+          { id: 'marvel_cup', name: 'Marvel Knockout Cup', description: 'Turniej Marvel themed', key: 'ch2_s4_marvel_cup' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch2_s4_cash_cup' }
+        ]
+      },
+      { 
+        id: 'S5', 
+        name: 'Season 5', 
+        description: 'Zero Point', 
+        image: 'CH2.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch2_s5_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch2_s5_cash_cup' },
+          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch2_s5_performance' }
+        ]
+      },
+      { 
+        id: 'S6', 
+        name: 'Season 6', 
+        description: 'Primal', 
+        image: 'CH2.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch2_s6_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch2_s6_cash_cup' },
+          { id: 'primal_cup', name: 'Primal Cup', description: 'Turniej Primal themed', key: 'ch2_s6_primal_cup' }
+        ]
+      },
+      { 
+        id: 'S7', 
+        name: 'Season 7', 
+        description: 'Invasion', 
+        image: 'CH2.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch2_s7_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch2_s7_cash_cup' },
+          { id: 'ufo_cup', name: 'UFO Cup', description: 'Turniej UFO themed', key: 'ch2_s7_ufo_cup' }
+        ]
+      },
+      { 
+        id: 'S8', 
+        name: 'Season 8', 
+        description: 'Cubed', 
+        image: 'CH2.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch2_s8_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch2_s8_cash_cup' },
+          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch2_s8_performance' }
+        ]
+      }
+    ]
+  },
+  3: {
+    name: 'Chapter 3',
+    seasons: [
+      { 
+        id: 'S1', 
+        name: 'Season 1', 
+        description: 'Flipped', 
+        image: 'CH3.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch3_s1_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch3_s1_cash_cup' },
+          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch3_s1_performance' }
+        ]
+      },
+      { 
+        id: 'S2', 
+        name: 'Season 2', 
+        description: 'Resistance', 
+        image: 'CH3.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch3_s2_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch3_s2_cash_cup' },
+          { id: 'resistance_cup', name: 'Resistance Cup', description: 'Turniej Resistance themed', key: 'ch3_s2_resistance_cup' }
+        ]
+      },
+      { 
+        id: 'S3', 
+        name: 'Season 3', 
+        description: 'Vibin', 
+        image: 'CH3.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch3_s3_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch3_s3_cash_cup' },
+          { id: 'summer_cup', name: 'Summer Vibin\' Cup', description: 'Letni turniej', key: 'ch3_s3_summer_cup' }
+        ]
+      },
+      { 
+        id: 'S4', 
+        name: 'Season 4', 
+        description: 'Paradise', 
+        image: 'CH3.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch3_s4_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch3_s4_cash_cup' },
+          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch3_s4_performance' }
+        ]
+      }
+    ]
+  },
+  4: {
+    name: 'Chapter 4',
+    seasons: [
+      { 
+        id: 'S1', 
+        name: 'Season 1', 
+        description: 'A New Beginning', 
+        image: 'CH4.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch4_s1_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch4_s1_cash_cup' },
+          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch4_s1_performance' }
+        ]
+      },
+      { 
+        id: 'S2', 
+        name: 'Season 2', 
+        description: 'MEGA', 
+        image: 'CH4.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch4_s2_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch4_s2_cash_cup' },
+          { id: 'mega_cup', name: 'MEGA Cup', description: 'Turniej MEGA themed', key: 'ch4_s2_mega_cup' }
+        ]
+      },
+      { 
+        id: 'S3', 
+        name: 'Season 3', 
+        description: 'WILDS', 
+        image: 'CH4.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch4_s3_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch4_s3_cash_cup' },
+          { id: 'wilds_cup', name: 'WILDS Cup', description: 'Dziki turniej', key: 'ch4_s3_wilds_cup' }
+        ]
+      },
+      { 
+        id: 'S4', 
+        name: 'Season 4', 
+        description: 'Last Resort', 
+        image: 'CH4.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch4_s4_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch4_s4_cash_cup' },
+          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch4_s4_performance' }
+        ]
+      }
+    ]
+  },
+  5: {
+    name: 'Chapter 5',
+    seasons: [
+      { 
+        id: 'S1', 
+        name: 'Season 1', 
+        description: 'Underground', 
+        image: 'CH5.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch5_s1_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch5_s1_cash_cup' },
+          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch5_s1_performance' }
+        ]
+      },
+      { 
+        id: 'S2', 
+        name: 'Season 2', 
+        description: 'Myths & Mortals', 
+        image: 'CH5.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch5_s2_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch5_s2_cash_cup' },
+          { id: 'myths_cup', name: 'Myths Cup', description: 'Turniej mitologiczny', key: 'ch5_s2_myths_cup' }
+        ]
+      },
+      { 
+        id: 'S3', 
+        name: 'Season 3', 
+        description: 'Wrecked', 
+        image: 'CH5.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch5_s3_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch5_s3_cash_cup' },
+          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch5_s3_performance' }
+        ]
+      },
+      { 
+        id: 'S4', 
+        name: 'Season 4', 
+        description: 'Absolute Doom', 
+        image: 'CH5.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch5_s4_fncs' },
+          { id: 'doom_cup', name: 'Doom Cup', description: 'Turniej Doctor Doom', key: 'ch5_s4_doom_cup' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch5_s4_cash_cup' }
+        ]
+      }
+    ]
+  },
+  6: {
+    name: 'Chapter 6',
+    seasons: [
+      { 
+        id: 'S1', 
+        name: 'Season 1', 
+        description: 'Hunters', 
+        image: 'Chapter6S1.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch6_s1_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch6_s1_cash_cup' },
+          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch6_s1_performance' }
+        ]
+      },
+      { 
+        id: 'S2', 
+        name: 'Season 2', 
+        description: 'Lawless', 
+        image: 'Chapter6S2.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch6_s2_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch6_s2_cash_cup' },
+          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch6_s2_performance' }
+        ]
+      },
+      { 
+        id: 'SMS1', 
+        name: 'Season Mini S1', 
+        description: 'Galactic Battle', 
+        image: 'Chapter6SMS1.png',
+        tournaments: [
+          { id: 'mini_fncs', name: 'Mini FNCS Finals', description: 'Skrócony turniej FNCS', key: 'ch6_sms1_mini_fncs' },
+          { id: 'special_cup', name: 'Special Mini Cup', description: 'Specjalny mini turniej', key: 'ch6_sms1_special_cup' }
+        ]
+      },
+      { 
+        id: 'S3', 
+        name: 'Season 3', 
+        description: 'Super', 
+        image: 'Chapter6S3.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch6_s3_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch6_s3_cash_cup' },
+          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch6_s3_performance' }
+        ]
+      },
+      { 
+        id: 'S4', 
+        name: 'Season 4', 
+        description: 'Shock N Awesome', 
+        image: 'Chapter6S4.png',
+        tournaments: [
+          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch6_s4_fncs' },
+          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch6_s4_cash_cup' },
+          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch6_s4_performance' }
+        ]
+      }
+    ]
+  }
+};
+
+function showSeasons(chapterNum) {
+  if (!chaptersData[chapterNum]) return;
+  
+  currentView = 'seasons';
+  currentChapter = chapterNum;
+  
+  // Ukryj chapters grid i footer
+  document.getElementById('chapters-grid').style.display = 'none';
+  document.getElementById('seasons-content').style.display = 'block';
+  document.getElementById('map-content').style.display = 'none';
+  document.getElementById('footer').style.display = 'none';
+  
+  // Pokaż back button
+  document.getElementById('back-button').style.display = 'block';
+  
+  // Zaktualizuj tytuł
+  document.getElementById('main-title').textContent = `${chaptersData[chapterNum].name} - Seasons`;
+  
+  // Wygeneruj seasons grid
+  const seasonsGrid = document.getElementById('seasons-grid');
+  seasonsGrid.innerHTML = '';
+  
+  chaptersData[chapterNum].seasons.forEach(season => {
+  const seasonCard = document.createElement('div');
+  seasonCard.className = 'season-card';
+  seasonCard.onclick = () => showTournaments(chapterNum, season.id);
+  seasonCard.innerHTML = `
+    <img src="${season.image}" alt="${season.name}">
+    <div class="season-info">
+      <div class="season-name">${season.name}</div>
+      <div class="season-description">${season.description}</div>
+    </div>
+  `;
+  seasonsGrid.appendChild(seasonCard);
+});
+}
+
+function showTournaments(chapterNum, seasonId) {
+  const chapter = chaptersData[chapterNum];
+  const season = chapter.seasons.find(s => s.id === seasonId);
+  
+  if (!season) return;
+  
+  currentView = 'tournaments';
+  currentSeason = seasonId;
+  
+  // Ukryj chapters view i pokaż tournaments view
+  document.getElementById('chapters-view').style.display = 'none';
+  document.getElementById('tournaments-view').style.display = 'block';
+  
+  // Wygeneruj sidebar z turniejami
+  const sidebar = document.getElementById('tournaments-sidebar');
+  sidebar.innerHTML = '';
+  
+  // Dodaj back button do sidebar
+  const backBtn = document.createElement('button');
+  backBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Back to Seasons';
+  backBtn.onclick = goBackToSeasons;
+  backBtn.classList.add('back-to-seasons');
+  backBtn.style.marginBottom = '20px';
+  sidebar.appendChild(backBtn);
+  
+  // Dodaj przyciski turniejów
+  season.tournaments.forEach(tournament => {
+    if (tournament.editions && tournament.editions.length > 0) {
+      // Turniej z edycjami
+      tournament.editions.forEach((edition, index) => {
+        const tournamentBtn = document.createElement('button');
+        tournamentBtn.textContent = `${tournament.name} - ${edition}`;
+        const tournamentKey = tournament.keys ? tournament.keys[index] : `${tournament.key}_${edition.toLowerCase().replace(' ', '_')}`;
+        tournamentBtn.onclick = () => showTournamentDetails(tournamentKey, `${tournament.name} - ${edition}`);
+        sidebar.appendChild(tournamentBtn);
+      });
+    } else {
+      // Turniej bez edycji (FNCS)
+      const tournamentBtn = document.createElement('button');
+      tournamentBtn.textContent = tournament.name;
+      tournamentBtn.onclick = () => showTournamentDetails(tournament.key, tournament.name);
+      sidebar.appendChild(tournamentBtn);
+    }
+  });
+  
+  // Wyczyść content area
+  document.getElementById('tournament-content-area').innerHTML = `
+    <div style="text-align: center; padding: 50px; color: #888;">
+      <h2>Wybierz turniej z menu po lewej stronie</h2>
+      <p>Kliknij na jeden z turniejów, aby zobaczyć szczegóły i wyniki.</p>
+    </div>
+  `;
+  
+  document.getElementById('tournament-right-image').innerHTML = '';
+}
+
+function showTournamentDetails(tournamentKey, tournamentName) {
+  const contentArea = document.getElementById('tournament-content-area');
+  const rightImage = document.getElementById('tournament-right-image');
+  
+  // Usuń active class z wszystkich przycisków
+  document.querySelectorAll('.sidebar button').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  // Dodaj active class do klikniętego przycisku
+  event.target.classList.add('active');
+  
+  // Przykładowa tabela wyników (można później zintegrować z prawdziwymi danymi)
+  const sampleData = [
+    ['Miejsce', 'Drużyna/Gracz', 'Punkty'],
+    ['1', 'Aqua & Nyhrox', '25'],
+    ['2', 'Bugha', '23'],
+    ['3', 'Tfue & Cloak', '21'],
+    ['4', 'Mongraal & Mitr0', '19'],
+    ['5', 'Benjyfishy & MrSavage', '17']
+  ];
+  
+  // Buduj tabelę HTML
+  let tableHTML = '<table>';
+  
+  for (let i = 0; i < sampleData.length; i++) {
+    const row = sampleData[i];
+    
+    tableHTML += '<tr>';
+    for (let j = 0; j < row.length; j++) {
+      const cell = row[j] || '';
+      if (i === 0) {
+        tableHTML += `<th${j === 1 ? ' class="team-cell"' : ''}>${cell}</th>`;
+      } else {
+        tableHTML += `<td${j === 1 ? ' class="team-cell"' : ''}>${cell}</td>`;
+      }
+    }
+    tableHTML += '</tr>';
+  }
+  tableHTML += '</table>';
+
+  contentArea.innerHTML = tableHTML;
+  contentArea.classList.add('has-content');
+  
+  // Pokaż odpowiedni obraz
+  const imageName = tournamentImages[tournamentKey] || 'mapplaceholder.png';
+  
+  if (imageName === 'mapplaceholder.png') {
+    rightImage.innerHTML = `
+      <div class="placeholder-wrapper">
+        <img src="${imageName}" alt="Mapa w trakcie tworzenia" />
+        <div class="placeholder-text">IN PROGRESS</div>
+      </div>
+    `;
+  } else {
+    rightImage.innerHTML = `<img src="${imageName}" alt="Mapa turnieju" />`;
+  }
+}
+
+function showMapDetails(chapterNum, seasonId, tournamentId, edition) {
+  const chapter = chaptersData[chapterNum];
+  const season = chapter.seasons.find(s => s.id === seasonId);
+  const tournament = season.tournaments.find(t => t.id === tournamentId);
+  
+  if (!season || !tournament) return;
+  
+  currentView = 'map';
+  currentTournament = tournamentId;
+  
+  // Ukryj poprzedni content
+  document.getElementById('seasons-content').style.display = 'none';
+  document.getElementById('map-content').style.display = 'block';
+  
+  // Zaktualizuj tytuł
+  const titleText = edition ? 
+    `${chapter.name} - ${season.name} - ${tournament.name} - ${edition}` :
+    `${chapter.name} - ${season.name} - ${tournament.name}`;
+  document.getElementById('main-title').textContent = titleText;
+  
+  // Wygeneruj szczegóły mapy
+  const mapDetails = document.getElementById('map-details');
+  mapDetails.innerHTML = `
+    <img src="mapplaceholder.png" alt="Tournament Map" class="map-image" />
+  `;
+}
+
+function showChapters() {
+  currentView = 'chapters';
+  currentChapter = null;
+  currentSeason = null;
+  currentTournament = null;
+  
+  // Pokaż chapters view i ukryj tournaments view
+  document.getElementById('chapters-view').style.display = 'block';
+  document.getElementById('tournaments-view').style.display = 'none';
+  
+  // Pokaż chapters grid i footer
+  document.getElementById('chapters-grid').style.display = 'grid';
+  document.getElementById('seasons-content').style.display = 'none';
+  document.getElementById('map-content').style.display = 'none';
+  document.getElementById('footer').style.display = 'block';
+  
+  // Ukryj back button
+  document.getElementById('back-button').style.display = 'none';
+  
+  // Przywróć oryginalny tytuł
+  document.getElementById('main-title').textContent = 'TOURNAMENT MAPS';
+}
+
+function goBack() {
+  if (currentView === 'map') {
+    showTournaments(currentChapter, currentSeason);
+  } else if (currentView === 'tournaments') {
+    goBackToSeasons();
+  } else if (currentView === 'seasons') {
+    showChapters();
+  }
+}
+
+function goBackToSeasons() {
+  // Ukryj tournaments view i pokaż chapters view z sezonami
+  document.getElementById('tournaments-view').style.display = 'none';
+  document.getElementById('chapters-view').style.display = 'block';
+  
+  // Pokaż seasons content
+  document.getElementById('chapters-grid').style.display = 'none';
+  document.getElementById('seasons-content').style.display = 'block';
+  document.getElementById('map-content').style.display = 'none';
+  document.getElementById('footer').style.display = 'none';
+  
+  // Pokaż back button
+  document.getElementById('back-button').style.display = 'block';
+  
+  // Zaktualizuj widok
+  currentView = 'seasons';
+  
+  // Zaktualizuj tytuł
+  document.getElementById('main-title').textContent = `${chaptersData[currentChapter].name} - Seasons`;
+}
+
+// Obsługa klawisza ESC
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && currentView !== 'chapters') {
+    goBack();
+  }
+});
+</script>
+
+</body>
+</html>

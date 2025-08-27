@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>EUCompetitive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;800&display=swap" rel="stylesheet" />
+  <!-- Font Awesome (ikony społecznościowe) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- SheetJS dla obsługi plików Excel -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <!-- Favicon -->
+  <link rel="icon" href="logo.png" type="image/png" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #131313;
+      color: white;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    /* --------- NAVBAR --------- */
+    .navbar {
+      position: relative;
+      width: 100%;
+      background-color: #2c2c2c;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .navbar img {
+      height: 70px;
+      z-index: 2;
+    }
+
+    .nav-buttons {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+      z-index: 1;
+    }
+
+    .nav-button {
+      background-color: #ffd700;
+      color: black;
+      font-weight: bold;
+      padding: 15px 15px;
+      text-decoration: none;
+      border-radius: 6px;
+      min-width: 120px;
+      text-align: center;
+      transition: transform 0.2s, opacity 0.2s;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .nav-button:hover {
+      opacity: 0.9;
+      transform: scale(1.03);
+    }
+
+    .social-icons {
+      margin-left: auto;
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-link {
+      color: #ffd700;
+      font-size: 24px;
+      transition: transform 0.2s ease, opacity 0.2s;
+    }
+
+    .social-link:hover {
+      transform: scale(1.2);
+      opacity: 0.9;
+    }
+
+    /* Loading status section */
+    .loading-section {
+      background-color: #2c2c2c;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 2px solid #ffd700;
+    }
+
+    .loading-status {
+      padding: 10px;
+      border-radius: 4px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .status-loading {
+      background-color: #2196F3;
+      color: white;
+    }
+
+    .status-success {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .status-error {
+      background-color: #f44336;
+      color: white;
+    }
+
+    /* --------- MAIN LAYOUT --------- */
+    .main-wrapper {
+      display: flex;
+      flex-grow: 1;
+      height: calc(100vh - 80px);
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 300px;
+      background-color: #2c2c2c;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar button {
+      width: 100%;
+      font-size: 14px;
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 12px;
+      color: #ffd700;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar button:hover {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+      border-color: #ffd700;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .sidebar button.active {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.2));
+      border-color: #ffd700;
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+    }
+
+    .sidebar button:disabled {
+      background: linear-gradient(135deg, rgba(102, 102, 102, 0.1), rgba(102, 102, 102, 0.05));
+      border: 1px solid rgba(102, 102, 102, 0.3);
+      color: #999;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .sidebar button:disabled:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .container {
+      display: flex;
+      flex-grow: 1;
+      padding: 20px;
+      box-sizing: border-box;
+      align-items: flex-start;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .table-container {
+      max-width: 100vw;
+      overflow-x: auto;
+      overflow-y: auto;
+      margin-left: 40px;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 1.2;
+      box-sizing: border-box;
+      max-height: calc(100vh - 120px);
+    }
+
+    .table-container.has-content {
+      background: black;
+      border: 1px solid #ffd700;
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    table {
+      width: 450px;
+      border-collapse: collapse;
+      color: white;
+      font-weight: bold;
+      font-family: 'Roboto', sans-serif;
+      table-layout: auto;
+    }
+
+    th, td {
+      padding: 8px 12px;
+      border: 1px solid #ffd700;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    th {
+      background-color: #333;
+    }
+
+    th:first-child, td:first-child {
+      width: 40px;
+      white-space: nowrap;
+    }
+
+    th.team-cell,
+    td.team-cell {
+      text-align: center !important;
+      vertical-align: middle !important;
+      white-space: normal;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    .right-image {
+      flex-grow: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding-left: 40px;
+      max-height: calc(100vh - 120px);
+      box-sizing: border-box;
+    }
+
+    .right-image img {
+      max-height: calc(100vh - 120px);
+      width: auto;
+      border: 1px solid #ffd700;
+      border-radius: 12px;
+      object-fit: contain;
+      display: block;
+    }
+
+
+
+    /* Scrollbar styles */
+    .table-container::-webkit-scrollbar {
+      height: 8px;
+      background-color: #2c2c2c;
+      border-radius: 8px;
+    }
+
+    .table-container::-webkit-scrollbar-thumb {
+      background-color: #ffd700;
+      border-radius: 8px;
+      border: 2px solid #2c2c2c;
+    }
+
+    .table-container::-webkit-scrollbar-thumb:hover {
+      background-color: #e6c200;
+    }
+
+    .table-container {
+      scrollbar-color: #ffd700 #2c2c2c;
+      scrollbar-width: thin;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 8px;
+      background-color: #2c2c2c;
+      border-radius: 8px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background-color: #ffd700;
+      border-radius: 8px;
+      border: 2px solid #2c2c2c;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb:hover {
+      background-color: #e6c200;
+    }
+
+    .sidebar {
+      scrollbar-color: #ffd700 #2c2c2c;
+      scrollbar-width: thin;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 1024px) {
+      .nav-buttons {
+        position: static;
+        transform: none;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+      .navbar {
+        height: auto;
+        flex-wrap: wrap;
+        padding: 10px 20px;
+      }
+      
+
+      }
+
+    
+
+    @media (max-width: 600px) {
+      .nav-buttons {
+        gap: 10px;
+      }
+      .navbar img {
+        margin-bottom: 10px;
+      }
+      .social-icons {
+        justify-content: center;
+        margin-top: 10px;
+        width: 100%;
+      }
+    }
+
+    .placeholder-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .placeholder-wrapper img {
+      filter: blur(4px);
+      display: block;
+      border-radius: 12px;
+      max-width: 100%;
+    }
+
+    .placeholder-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ffd700;
+      font-weight: 800;
+      font-size: 24px;
+      text-shadow: 1px 1px 4px black;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .winner-players.two-columns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* dwa kafelki w rzędzie */
+  gap: 12px; /* odstęp między kafelkami */
+  width: 100%; /* rozciąga się na szerokość kolumny */
+}
+
+/* Sztywne szerokości kolumn */
+.col-rank {
+  width: 60px;   /* kolumna 1: np. miejsce */
+}
+.col-team {
+  width: 300px;  /* kolumna 2: drużyna */
+}
+.col-points {
+  width: 100px;  /* kolumna 3: punkty */
+}
+
+.logo {
+  height: 200px;   /* kontrola rozmiaru */
+  width: auto;
+  margin-right: 15px; /* odstęp od tekstu */
+}
+
+.logo-text {
+  font-size: 30px;
+  font-weight: bold;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <img src="logo.png" alt="logo" />
+    <span class="logo-text">EUCompetitive</span>
+
+    <div class="nav-buttons">
+      <a href="index.html" class="nav-button">HOME</a>
+      <a href="maps.html" class="nav-button">MAPS</a>
+      <a href="globals-map.html" class="nav-button">GLOBALS MAP</a>
+      <a href="globals-teams.html" class="nav-button">GLOBALS TEAMS</a>
+      <a href="tournaments.html" class="nav-button">SCHEDULE</a>
+      <a href="stats.html" class="nav-button">STATS</a>
+    </div>
+
+    <div class="social-icons">
+      <a href="https://x.com/kxrr0" target="_blank" class="social-link"><i class="fab fa-x-twitter"></i></a>
+      <a href="https://www.twitch.tv/kxrr0" target="_blank" class="social-link"><i class="fab fa-twitch"></i></a>
+      <a href="https://discord.gg/zGuzHT6y" target="_blank" class="social-link"><i class="fab fa-discord"></i></a>
+    </div>
+  </div>
+
+  <div class="main-wrapper">
+    <div class="sidebar">
+
+      <button onclick="showTournament('tourn1')" data-tournament="tourn1">CH1 SX</button>
+      <button onclick="showTournament('tourn2')" data-tournament="tourn2">CH2 S1</button>
+      <button onclick="showTournament('tourn3')" data-tournament="tourn3">CH2 S2</button>
+      <button onclick="showTournament('tourn4')" data-tournament="tourn4">CH2 S2 - INVITATIONAL</button>
+      <button onclick="showTournament('tourn5')" data-tournament="tourn5">CH2 S3</button>
+      <button onclick="showTournament('tourn6')" data-tournament="tourn6">CH2 S4</button>
+      <button onclick="showTournament('tourn7')" data-tournament="tourn7">CH2 S5</button>
+      <button onclick="showTournament('tourn8')" data-tournament="tourn8">CH2 S6</button>
+      <button onclick="showTournament('tourn9')" data-tournament="tourn9">ALL STAR SOLO</button>
+      <button onclick="showTournament('tourn10')" data-tournament="tourn10">CH2 S7</button>
+      <button onclick="showTournament('tourn11')" data-tournament="tourn11">CH2 S8</button>
+      <button onclick="showTournament('tourn12')" data-tournament="tourn12">GRAND ROYALE</button>
+      <button onclick="showTournament('tourn13')" data-tournament="tourn13">CH3 S1</button>
+      <button onclick="showTournament('tourn14')" data-tournament="tourn14">CH3 S2</button>
+      <button onclick="showTournament('tourn15')" data-tournament="tourn15">CH3 S3</button>
+      <button onclick="showTournament('tourn16')" data-tournament="tourn16">INVITATIONAL 2022</button>
+      <button onclick="showTournament('tourn17')" data-tournament="tourn17">CH4 S1</button>
+      <button onclick="showTournament('tourn18')" data-tournament="tourn18">CH4 S2</button>
+      <button onclick="showTournament('tourn19')" data-tournament="tourn19">CH4 S3</button>
+      <button onclick="showTournament('tourn20')" data-tournament="tourn20">GLOBALS 2023</button>
+      <button onclick="showTournament('tourn21')" data-tournament="tourn21">CH5 S1</button>
+      <button onclick="showTournament('tourn22')" data-tournament="tourn22">CH5 S2</button>
+      <button onclick="showTournament('tourn23')" data-tournament="tourn23">CH5 S3</button>
+      <button onclick="showTournament('tourn24')" data-tournament="tourn24">GLOBALS 2024</button>
+      <button onclick="showTournament('tourn25')" data-tournament="tourn25">CH6 S1</button>
+      <button onclick="showTournament('tourn26')" data-tournament="tourn26">CH6 S2</button>
+      <button onclick="showTournament('tourn27')" data-tournament="tourn27">CH6 S3</button>
+      <button onclick="showTournament('tourn28')" data-tournament="tourn28">GLOBALS 2025</button>
+    </div>
+  
+    <div class="container">
+      <div class="table-container" id="content-area">
+      </div>
+      <div class="right-image"></div>
+    </div>
+  </div>
+
+  <script>
+    // Domyślne mapowania nazw plików obrazów dla każdego turnieju
+    const tournamentImages = {
+      tourn1: 'mapplaceholder.png',
+      tourn2: 'mapplaceholder.png',
+      tourn3: 'mapplaceholder.png',
+      tourn4: 'mapplaceholder.png',
+      tourn5: 'mapplaceholder.png',
+      tourn6: 'CH2S4GRANDS.png',
+      tourn7: 'CH2S5GRANDS.png',
+      tourn8: 'CH2S6GRANDS.png',
+      tourn9: 'ALLSTARGRANDS.png',
+      tourn10: 'CH2S7GRANDS.png',
+      tourn11: 'CH2S8GRANDS.png',
+      tourn12: 'GRANDROYALE.png',
+      tourn13: 'CH3S1GRANDS.png',
+      tourn14: 'CH3S2GRANDS.png',
+      tourn15: 'CH3S3GRANDS.png',
+      tourn16: 'INVITATIONAL.png',
+      tourn17: 'CH4S1GRANDS.png',
+      tourn18: 'CH4S2GRANDS.png',
+      tourn19: 'CH4S3GRANDS.png',
+      tourn20: 'GLOBALS2023.png',
+      tourn21: 'CH5S1GRANDS.png',
+      tourn22: 'CH5S2GRANDS.png',
+      tourn23: 'CH5S3GRANDS.png',
+      tourn24: 'GLOBALS2024.png',
+      tourn25: 'CH6S1GRANDS.png',
+      tourn26: 'CH6S2GRANDS.png',
+      tourn27: 'CH6S3GRANDS.png',
+      tourn28: 'GLOBALS2025.png'
+    };
+
+    // Przechowuje dane z pliku Excel
+    let excelData = {};
+    let isExcelLoaded = false;
+
+    // Obsługa przycisków sidebar
+    const sidebarButtons = document.querySelectorAll('.sidebar button');
+
+    sidebarButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        sidebarButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+      });
+    });
+
+    // Automatyczne ładowanie pliku Excel przy starcie
+    window.addEventListener('load', loadExcelData);
+
+    async function loadExcelData() {
+      const contentArea = document.getElementById('content-area');
+      
+      try {
+        // Pobierz plik Excel
+        const response = await fetch('fncsdata.xlsx');
+        
+        if (!response.ok) {
+          throw new Error(`Nie można pobrać pliku: ${response.status} ${response.statusText}`);
+        }
+        
+        const arrayBuffer = await response.arrayBuffer();
+        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+        
+        // Resetuj dane
+        excelData = {};
+        let loadedSheets = 0;
+
+        // Przeczytaj wszystkie arkusze
+        workbook.SheetNames.forEach(sheetName => {
+          // Sprawdź czy nazwa arkusza pasuje do wzorca tournX
+          if (sheetName.startsWith('tourn')) {
+            const worksheet = workbook.Sheets[sheetName];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+            
+            if (jsonData.length > 0) {
+              excelData[sheetName] = jsonData;
+              loadedSheets++;
+            }
+          }
+        });
+
+        if (loadedSheets > 0) {
+          isExcelLoaded = true;
+          
+          // Włącz przyciski
+          enableTournamentButtons();
+          
+          // Wyczyść obszar treści
+          contentArea.innerHTML = ``;
+        } else {
+          throw new Error('Nie znaleziono arkuszy o nazwach "tourn1", "tourn2", etc.');
+        }
+        
+      } catch (error) {
+        console.error('Błąd ładowania Excel:', error);
+        contentArea.innerHTML = ``;
+        
+        // Wyłącz wszystkie przyciski turniejowe
+        disableTournamentButtons();
+      }
+    }
+
+    function enableTournamentButtons() {
+      sidebarButtons.forEach(button => {
+        const tournamentId = button.getAttribute('data-tournament');
+        const isWinnersButton = button.getAttribute('data-view') === 'fncs-winners';
+        
+        if (isWinnersButton) {
+          // Przycisk FNCS WINNERS jest zawsze aktywny
+          button.disabled = false;
+          button.style.opacity = '1';
+        } else if (tournamentId && excelData[tournamentId]) {
+          button.disabled = false;
+          button.style.opacity = '1';
+        } else if (tournamentId) {
+          button.disabled = true;
+          button.style.opacity = '0.5';
+        }
+      });
+    }
+
+    function disableTournamentButtons() {
+      sidebarButtons.forEach(button => {
+        const isWinnersButton = button.getAttribute('data-view') === 'fncs-winners';
+        if (!isWinnersButton) {
+          button.disabled = true;
+          button.style.opacity = '0.5';
+        }
+      });
+    }
+
+
+
+      // Ukryj obraz po prawej stronie
+      rightImage.innerHTML = '';
+
+    
+      content.innerHTML = winnersHTML;
+      content.classList.remove('has-content');
+    
+
+    function showTournament(id) {
+      if (!isExcelLoaded || !excelData[id]) {
+        document.getElementById('content-area').innerHTML = `
+          <h2>❌ Brak danych dla turnieju ${id}</h2>
+          <p>Upewnij się, że plik <code>fncsdata.xlsx</code> zawiera arkusz o nazwie "${id}" z danymi turnieju.</p>
+          <br>
+          <div style="background-color: #333; padding: 15px; border-radius: 8px;">
+            <p><strong>Dostępne arkusze:</strong> ${Object.keys(excelData).join(', ') || 'Brak'}</p>
+          </div>
+        `;
+        return;
+      }
+
+      const tournamentData = excelData[id];
+      const content = document.getElementById('content-area');
+      const rightImage = document.querySelector('.right-image');
+
+      // Buduj tabelę HTML
+      let tableHTML = `
+  <table>
+    <colgroup>
+      <col class="col-rank">
+      <col class="col-team">
+      <col class="col-points">
+    </colgroup>
+`;
+      
+      for (let i = 0; i < tournamentData.length; i++) {
+        const row = tournamentData[i];
+        
+        // Pomiń puste wiersze
+        if (!row || row.every(cell => !cell)) continue;
+        
+        tableHTML += '<tr>';
+        for (let j = 0; j < Math.min(3, row.length); j++) { // Maksymalnie 3 kolumny
+          const cell = row[j] || '';
+          // Dodaj klasę team-cell dla drugiej kolumny (indeks 1)
+          if (i === 0) {
+            tableHTML += `<th${j === 1 ? ' class="team-cell"' : ''}>${cell}</th>`;
+          } else {
+            tableHTML += `<td${j === 1 ? ' class="team-cell"' : ''}>${cell}</td>`;
+          }
+        }
+        tableHTML += '</tr>';
+      }
+      tableHTML += '</table>';
+
+      content.innerHTML = tableHTML;
+      content.classList.add('has-content');
+      
+      // Pokaż odpowiedni obraz
+      const imageName = tournamentImages[id] || 'CH2S8GRANDS.png';
+      // jeśli to placeholder, dodaj blur + napis IN PROGRESS
+      if (imageName === 'mapplaceholder.png') {
+        rightImage.innerHTML = `
+          <div class="placeholder-wrapper">
+            <img src="${imageName}" alt="Mapa w trakcie tworzenia" />
+            <div class="placeholder-text">IN PROGRESS</div>
+          </div>
+        `;
+      } else {
+        rightImage.innerHTML = `<img src="${imageName}" alt="Mapa turnieju" />`;
+      }
+    }
+
+    // Wyłącz wszystkie przyciski turniejowe na start
+    document.addEventListener('DOMContentLoaded', () => {
+      disableTournamentButtons();
+    });
+  </script>
+
+</body>
+</html>

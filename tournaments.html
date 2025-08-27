@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EUCompetitive</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Favicon -->
+  <link rel="icon" href="logo.png" type="image/png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #131313;
+      font-family: 'Roboto', sans-serif;
+      color: white;
+    }
+
+    .navbar {
+      position: relative;
+      width: 100%;
+      background-color: #2c2c2c;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .navbar img {
+      height: 50px;
+      z-index: 2;
+    }
+
+    .nav-buttons {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      z-index: 1;
+    }
+
+    .nav-button {
+      background-color: #ffd700;
+      color: black;
+      font-weight: bold;
+      padding: 15px 20px;
+      text-decoration: none;
+      border-radius: 6px;
+      min-width: 150px;
+      text-align: center;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .nav-button:hover {
+      opacity: 0.9;
+      transform: scale(1.03);
+    }
+
+    .social-icons {
+      margin-left: auto;
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-link {
+      color: #ffd700;
+      font-size: 24px;
+      transition: transform 0.2s ease, opacity 0.2s;
+    }
+
+    .social-link:hover {
+      transform: scale(1.2);
+      opacity: 0.9;
+    }
+
+    .calendar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 30px;
+      position: relative;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .week {
+      display: flex;
+      gap: 16px;
+      width: max-content;
+      margin-bottom: 16px;
+      flex-wrap: nowrap;
+    }
+
+    .day-header {
+      background-color: rgb(41, 40, 40);
+      color: white;
+      font-weight: bold;
+      padding: 12px;
+      width: 180px;
+      height: 50px;
+      text-align: center;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+    }
+
+    .day {
+      position: relative;
+      width: 180px;
+      height: 150px;
+      border-radius: 6px;
+      text-align: center;
+      background-color: #ffd700;
+      font-weight: 400;
+      font-size: 1.3em;
+      overflow: hidden;
+      color: rgb(255, 255, 255);
+      text-shadow: 1px 1px 2px black;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid #ffd700;
+    }
+
+    .day::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0,0,0,0.5);
+      border-radius: 6px;
+      z-index: 0;
+    }
+
+    .day:hover::before {
+      background-color: rgba(0,0,0,0.15);
+    }
+
+    .day-date-top {
+      width: 100%;
+      height: 20%;
+      background-color: rgba(0, 0, 0, 0.55);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      font-size: 0.7em;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      z-index: 2;
+    }
+
+    .day-text-container {
+      width: 100%;
+      height: 30%;
+      background-color: rgba(0, 0, 0, 0.55);
+      padding: 5px 8px;
+      font-size: 0.65em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+      z-index: 2;
+      font-weight: bold;
+    }
+
+    .eval {
+      background-image: url('eval.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .div1 {
+      background-image: url('div1.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .console {
+      background-image: url('consolevc.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .empty-box {
+      width: 180px;
+      height: 150px;
+      background-color: #8d8b8b;
+      border-radius: 6px;
+    }
+
+    .next-month-btn {
+      width: 50px;
+      height: 50px;
+      background-color: #ffd700;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: black;
+      box-shadow: 0 0 8px #ffd700aa;
+      transition: background-color 0.3s ease;
+      position: absolute;
+      right: -100px;
+      top: 54%;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+
+    .next-month-btn:hover {
+      background-color: #e6c200;
+    }
+
+    .calendar-section {
+      display: none;
+      width: max-content;
+    }
+
+    .calendar-section.active {
+      display: block;
+    }
+
+    .ps {
+  background-color: #3b5998; /* niebieski PS */
+  background-image: url('pscup.png'); /* opcjonalnie własna grafika */
+  background-size: cover;
+  background-position: center;
+}
+
+.reload {
+  background-color: #990000;
+  background-image: url('reload.png'); /* opcjonalnie */
+  background-size: cover;
+  background-position: center;
+}
+
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #2c2c2c;
+  border-radius: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #ffd700;
+  border-radius: 8px;
+  border: 2px solid #2c2c2c;
+}
+
+.footer {
+      max-width: 75%;
+      margin: 40px auto 20px auto;
+      text-align: right;
+      color: #aaaaaa;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .footer-line {
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      margin-bottom: 10px;
+    }
+
+    .navbar img {
+      height: 70px;
+      z-index: 2;
+    }
+
+    .logo-text {
+  font-size: 30px;
+  font-weight: bold;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+}
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <img src="logo.png" alt="logo" />
+    <span class="logo-text">EUCompetitive</span>
+    <div class="nav-buttons">
+      <a href="maps.html" class="nav-button">MAPS</a>
+      <a href="globals-map.html" class="nav-button">GLOBALS MAP</a>
+      <a href="globals-teams.html" class="nav-button">GLOBALS TEAMS</a>
+      <a href="fncs.html" class="nav-button">FNCS</a>
+      <a href="stats.html" class="nav-button">STATS</a>
+    </div>
+    <div class="social-icons">
+      <a href="https://x.com/kxrr0" target="_blank" class="social-link"><i class="fab fa-x-twitter"></i></a>
+      <a href="https://www.twitch.tv/kxrr0" target="_blank" class="social-link"><i class="fab fa-twitch"></i></a>
+      <a href="https://discord.gg/zGuzHT6y" target="_blank" class="social-link"><i class="fab fa-discord"></i></a>
+    </div>
+  </div>
+
+  <div class="calendar" id="calendar">
+
+    <div class="week day-headers">
+      <div class="day-header">Monday</div>
+      <div class="day-header">Tuesday</div>
+      <div class="day-header">Wednesday</div>
+      <div class="day-header">Thursday</div>
+      <div class="day-header">Friday</div>
+      <div class="day-header">Saturday</div>
+      <div class="day-header">Sunday</div>
+    </div>
+
+    <!-- SIERPIEŃ -->
+    <div class="calendar-section active" id="august">
+
+      <div class="week">
+        <div class="empty-box"></div>
+        <div class="empty-box"></div>
+        <div class="empty-box"></div>
+        <div class="empty-box"></div>
+        <div class="empty-box"></div>
+        <div class="empty-box"></div>
+        <div class="empty-box"></div>
+      </div>
+
+      <div class="week">
+        <div class="empty-box"></div>
+        <div class="empty-box"></div>
+        <div class="empty-box"></div>
+        <div class="empty-box"></div>
+        <div class="day eval">
+          <div class="day-date-top">08.08 - Round 1 & 2</div>
+          <div class="day-text-container">
+            Performance Evaluation Cup<br>
+          </div>
+        </div>
+        <div class="empty-box"></div>
+        <div class="empty-box"></div>
+      </div>
+
+      <div class="week">
+        <div class="empty-box"></div>
+        <div class="day eval">
+          <div class="day-date-top">12.08 - Round 1 & 2</div>
+          <div class="day-text-container">
+            Performance Evaluation Cup<br>
+          </div>
+        </div>
+        <div class="day div1">
+          <div class="day-date-top">13.08 - Day 1</div>
+          <div class="day-text-container">
+            FNCS Division 1 Practice<br>
+          </div>
+        </div>
+        <div class="day div1">
+          <div class="day-date-top">14.08 - Day 2</div>
+          <div class="day-text-container">
+            FNCS Division 1 Practice<br>
+          </div>
+        </div>
+        <div class="empty-box"></div>
+        <div class="day div1">
+          <div class="day-date-top">16.08 - Finals</div>
+          <div class="day-text-container">
+            FNCS Division 1 Practice<br>
+          </div>
+        </div>
+        <div class="day console">
+          <div class="day-date-top">17.08 - Round 1</div>
+          <div class="day-text-container">
+            Console Victory Cash Cup<br>
+          </div>
+        </div>
+      </div>
+
+      <div class="week">
+        <div class="empty-box"></div>
+        <div class="day eval">
+          <div class="day-date-top">19.08 - Round 1 & 2</div>
+          <div class="day-text-container">
+            Performance Evaluation Cup<br>
+          </div>
+        </div>
+        <div class="day div1">
+          <div class="day-date-top">20.08 - Day 1</div>
+          <div class="day-text-container">
+            FNCS Division 1 Practice<br>
+          </div>
+        </div>
+        <div class="day div1">
+          <div class="day-date-top">21.08 - Day 2</div>
+          <div class="day-text-container">
+            FNCS Division 1 Practice<br>
+          </div>
+        </div>
+        <div class="empty-box"></div>
+        <div class="day div1">
+          <div class="day-date-top">23.08 - Finals</div>
+          <div class="day-text-container">
+            FNCS Division 1 Practice<br>
+          </div>
+        </div>
+        <div class="day console">
+          <div class="day-date-top">24.08 - Round 2</div>
+          <div class="day-text-container">
+            Console Victory Cash Cup<br>
+          </div>
+        </div>
+      </div>
+
+      <div class="week">
+        <div class="empty-box"></div>
+        <div class="day eval">
+          <div class="day-date-top">26.08 - Round 1 & 2</div>
+          <div class="day-text-container">
+            Performance Evaluation Cup<br>
+          </div>
+        </div>
+        <div class="day div1">
+          <div class="day-date-top">27.08 - Day 1</div>
+          <div class="day-text-container">
+            FNCS Division 1 Practice<br>
+          </div>
+        </div>
+        <div class="day div1">
+          <div class="day-date-top">28.08 - Day 2</div>
+          <div class="day-text-container">
+            FNCS Division 1 Practice<br>
+          </div>
+        </div>
+        <div class="empty-box"></div>
+        <div class="day div1">
+          <div class="day-date-top">30.08 - Finals</div>
+          <div class="day-text-container">
+            FNCS Division 1 Practice<br>
+          </div>
+        </div>
+        <div class="day console">
+          <div class="day-date-top">31.08 - Round 1</div>
+          <div class="day-text-container">
+            Console Victory Cash Cup<br>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+<!-- WRZESIEŃ -->
+<div class="calendar-section" id="september">
+
+    <!-- Tydzień 1 -->
+    <div class="week">
+      <div class="empty-box"></div>
+      <div class="empty-box"></div>
+      <div class="day eval">
+        <div class="day-date-top">02.09 - Round 1 & 2</div>
+        <div class="day-text-container">Performance Evaluation Cup<br></div>
+      </div>
+      <div class="day ps">
+        <div class="day-date-top">03.09 - Opens</div>
+        <div class="day-text-container">PlayStation Cup<br></div>
+      </div>
+      <div class="day ps">
+        <div class="day-date-top">04.09 - Finals</div>
+        <div class="day-text-container">PlayStation Cup<br></div>
+      </div>
+      <div class="day reload">
+        <div class="day-date-top">05.09 - R1–R5</div>
+        <div class="day-text-container">Reload Cup<br></div>
+      </div>
+      <div class="day div1">
+        <div class="day-date-top">06.09 - Day 1</div>
+        <div class="day-text-container">FNCS Global Championship 2025<br></div>
+      </div>
+    </div>
+  
+    <!-- Tydzień 2 -->
+    <div class="week">
+      <div class="day div1">
+        <div class="day-date-top">07.09 - Day 2</div>
+        <div class="day-text-container">FNCS Global Championship 2025<br></div>
+      </div>
+      <div class="empty-box"></div>
+      <div class="day eval">
+        <div class="day-date-top">09.09 - Round 1 & 2</div>
+        <div class="day-text-container">Performance Evaluation Cup<br></div>
+      </div>
+      <div class="empty-box"></div>
+      <div class="empty-box"></div>
+      <div class="day reload">
+        <div class="day-date-top">12.09 - R6–R10</div>
+        <div class="day-text-container">Reload Cup<br></div>
+      </div>
+      <div class="empty-box"></div>
+    </div>
+  
+    <!-- Tydzień 3 -->
+    <div class="week">
+      <div class="day console">
+        <div class="day-date-top">14.09 - Round 2</div>
+        <div class="day-text-container">Console Victory Cash Cup<br></div>
+      </div>
+      <div class="empty-box"></div>
+      <div class="day eval">
+        <div class="day-date-top">16.09 - Round 1 & 2</div>
+        <div class="day-text-container">Performance Evaluation Cup<br></div>
+      </div>
+      <div class="empty-box"></div>
+      <div class="empty-box"></div>
+      <div class="day reload">
+        <div class="day-date-top">19.09 - R11–R15</div>
+        <div class="day-text-container">Reload Cup<br></div>
+      </div>
+      <div class="empty-box"></div>
+    </div>
+  
+    <!-- Tydzień 4 -->
+    <div class="week">
+      <div class="day console">
+        <div class="day-date-top">21.09 - Round 1</div>
+        <div class="day-text-container">Console Victory Cash Cup<br></div>
+      </div>
+      <div class="empty-box"></div>
+      <div class="day eval">
+        <div class="day-date-top">23.09 - Round 1 & 2</div>
+        <div class="day-text-container">Performance Evaluation Cup<br></div>
+      </div>
+      <div class="empty-box"></div>
+      <div class="empty-box"></div>
+      <div class="day reload">
+        <div class="day-date-top">26.09 - R16–R20</div>
+        <div class="day-text-container">Reload Cup<br></div>
+      </div>
+      <div class="empty-box"></div>
+    </div>
+  
+    <!-- Tydzień 5 -->
+    <div class="week">
+      <div class="day console">
+        <div class="day-date-top">28.09 - Round 2</div>
+        <div class="day-text-container">Console Victory Cash Cup<br></div>
+      </div>
+      <div class="empty-box"></div>
+      <div class="day eval">
+        <div class="day-date-top">30.09 - Round 1 & 2</div>
+        <div class="day-text-container">Performance Evaluation Cup<br></div>
+      </div>
+      <div class="empty-box"></div>
+      <div class="empty-box"></div>
+      <div class="empty-box"></div>
+      <div class="empty-box"></div>
+    </div>
+  
+  </div>
+
+<!-- PAŹDZIERNIK -->
+<div class="calendar-section" id="october">
+
+    <!-- Tydzień 1 -->
+    <div class="week">
+      <div class="empty-box"></div>
+      <div class="empty-box"></div>
+      <div class="empty-box"></div> <!-- 01 śr -->
+      <div class="empty-box"></div> <!-- 02 czw -->
+      <div class="day reload">
+        <div class="day-date-top">03.10 - R21–R25</div>
+        <div class="day-text-container">Reload Cup</div>
+      </div>
+      <div class="empty-box"></div> <!-- 04 sob -->
+      <div class="day console">
+        <div class="day-date-top">05.10 - Round 1</div>
+        <div class="day-text-container">Console Victory Cash Cup</div>
+      </div>
+    </div>
+  
+    <!-- Tydzień 2 -->
+    <div class="week">
+      <div class="empty-box"></div> <!-- 06 -->
+      <div class="day eval">
+        <div class="day-date-top">07.10 - R1 & R2</div>
+        <div class="day-text-container">Performance Evaluation Cup</div>
+      </div>
+      <div class="empty-box"></div> <!-- 08 -->
+      <div class="empty-box"></div> <!-- 09 -->
+      <div class="day reload">
+        <div class="day-date-top">10.10 - R26–R30</div>
+        <div class="day-text-container">Reload Cup</div>
+      </div>
+      <div class="empty-box"></div> <!-- 11 -->
+      <div class="day console">
+        <div class="day-date-top">12.10 - Round 2</div>
+        <div class="day-text-container">Console Victory Cash Cup</div>
+      </div>
+    </div>
+  
+    <!-- Tydzień 3 -->
+    <div class="week">
+      <div class="empty-box"></div> <!-- 13 -->
+      <div class="day eval">
+        <div class="day-date-top">14.10 - R1 & R2</div>
+        <div class="day-text-container">Performance Evaluation Cup</div>
+      </div>
+      <div class="empty-box"></div> <!-- 15 -->
+      <div class="empty-box"></div> <!-- 16 -->
+      <div class="day reload">
+        <div class="day-date-top">17.10 - R31–R35</div>
+        <div class="day-text-container">Reload Cup</div>
+      </div>
+      <div class="empty-box"></div> <!-- 18 -->
+      <div class="day console">
+        <div class="day-date-top">19.10 - Round 1</div>
+        <div class="day-text-container">Console Victory Cash Cup</div>
+      </div>
+    </div>
+  
+    <!-- Tydzień 4 -->
+    <div class="week">
+      <div class="empty-box"></div> <!-- 20 -->
+      <div class="day eval">
+        <div class="day-date-top">21.10 - R1 & R2</div>
+        <div class="day-text-container">Performance Evaluation Cup</div>
+      </div>
+      <div class="empty-box"></div> <!-- 22 -->
+      <div class="empty-box"></div> <!-- 23 -->
+      <div class="day reload">
+        <div class="day-date-top">24.10 - R36–R40</div>
+        <div class="day-text-container">Reload Cup</div>
+      </div>
+      <div class="empty-box"></div> <!-- 25 -->
+      <div class="day console">
+        <div class="day-date-top">26.10 - Round 2</div>
+        <div class="day-text-container">Console Victory Cash Cup</div>
+      </div>
+    </div>
+  
+    <!-- Tydzień 5 -->
+    <div class="week">
+      <div class="empty-box"></div> <!-- 27 -->
+      <div class="empty-box"></div> <!-- 28 -->
+      <div class="empty-box"></div> <!-- 29 -->
+      <div class="empty-box"></div> <!-- 30 -->
+      <div class="empty-box"></div> <!-- 31 -->
+      <div class="empty-box"></div>
+      <div class="empty-box"></div>
+    </div>
+  
+  </div>
+
+    <!-- PRZYCISK NA PRZYSZŁY MIESIĄC -->
+    <button id="next-month-btn" class="next-month-btn" title="Next Month">
+      <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </div>
+
+  <footer class="footer">
+    <hr class="footer-line" />
+    <p>
+      Fortnite is a registered trademark of Epic Games.<br>
+      EUCompetitive is not associated or endorsed by Epic Games.
+    </p>
+  </footer>
+
+
+  <script>
+    const nextMonthBtn = document.getElementById('next-month-btn');
+    const sections = ['august', 'september', 'october'];
+    let currentIndex = 0;
+
+    nextMonthBtn.addEventListener('click', () => {
+      // Ukryj aktualną sekcję
+      document.getElementById(sections[currentIndex]).classList.remove('active');
+      // Zwiększ indeks, jeśli jest większy niż ostatni, wróć do zera
+      currentIndex = (currentIndex + 1) % sections.length;
+      // Pokaż nową sekcję
+      document.getElementById(sections[currentIndex]).classList.add('active');
+    });
+  </script>
+</body>
+</html>

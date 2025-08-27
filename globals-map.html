@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>EUCompetitive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+
+
+    <!-- Favicon -->
+    <link rel="icon" href="logo.png" type="image/png" />
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-color: #131313;
+      font-family: "Roboto", sans-serif;
+      overflow: hidden;
+      font-weight: bold;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+      align-items: stretch;
+    }
+
+    .left-table {
+      width: 600px;
+      margin-right: 20px;
+      background: black;
+      border: 1px solid #ffd700;
+      border-radius: 12px;
+      padding: 10px;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-y: hidden;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .middle-table {
+      width: 800px;
+      margin-right: 20px;
+      background: black;
+      border: 1px solid #ffd700;
+      border-radius: 12px;
+      padding: 10px;
+      color: white;
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      max-height: 100%;
+      overflow-y: auto;
+    }
+
+    .middle-table table {
+      width: 100%;
+      border-collapse: collapse;
+      color: white;
+      font-weight: bold;
+      font-family: "Roboto", sans-serif;
+      table-layout: auto;
+      user-select: none;
+      flex-grow: 1;
+    }
+
+    .home-button {
+      position: absolute;
+      top: 40px;
+      right: 40px;
+      background-color: #ffd700;
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 2px solid black;
+      font-family: "Roboto", sans-serif;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.2s ease;
+      z-index: 1000;
+    }
+
+    .home-button:hover {
+      background-color: #e6c200;
+    }
+
+    .right-image {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding-left: 160px;
+      height: 100%;
+    }
+
+    .right-image img {
+      max-height: 100%;
+      width: auto;
+      border: 1px solid #ffd700;
+      border-radius: 12px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .team-item {
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s;
+      font-size: 14px;
+      white-space: normal;
+      overflow-wrap: break-word;
+      line-height: 1.2;
+      text-align: center;
+      max-height: 3.6em;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      background: none;
+    }
+
+    .team-item:hover {
+      background-color: #ffd700;
+      color: black;
+    }
+
+    .team-item.selected {
+      background-color: #ffa500;
+      color: black;
+    }
+
+    /* Kolumna miejsc */
+    tbody td.place {
+      width: 40px;
+      max-width: 40px;
+      padding: 6px 4px;
+      white-space: nowrap;
+      text-align: center;
+      border: 1px solid #ffd700;
+      vertical-align: middle;
+      cursor: pointer;
+      user-select: none;
+      background-color: #3b3b3b;
+      font-size: 12px; /* mniejsza czcionka dla cyfr */
+      font-weight: bold;
+    }
+
+    /* Kolumna drużyn */
+    tbody td.team-cell {
+      border: 1px solid #ffd700;
+      padding: 6px 8px;
+      text-align: center; /* WYŚRODKOWANIE POZIOME */
+      vertical-align: middle; /* WYŚRODKOWANIE PIONOWE */
+      white-space: normal;
+      overflow-wrap: break-word;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1.2;
+      user-select: text;
+      background-color: transparent;
+      font-weight: bold;
+    }
+
+    tbody td.team-cell.assigned {
+      font-weight: bold;
+    }
+
+    tbody td.place.assigned {
+      background-color: #ffd700;
+      color: black;
+      font-size: 12px;
+    }
+
+    /* Obwódka czerwona dla zaznaczonej drużyny */
+    tbody td.team-cell.selected-cell {
+      border: 3px solid rgb(187, 28, 0);
+      box-sizing: border-box;
+      outline-offset: 0;
+    }
+
+    .middle-table::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .middle-table::-webkit-scrollbar-track {
+      background-color: #2c2c2c;
+      border-radius: 8px;
+    }
+
+    .middle-table::-webkit-scrollbar-thumb {
+      background-color: #ffd700;
+      border-radius: 8px;
+      border: 2px solid #2c2c2c;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="home-button top-right">HOME</a>
+
+  <div class="container">
+    <div class="left-table" id="teamsList"></div>
+    <div class="middle-table">
+      <table id="mainTable">
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="right-image">
+      <img id="mainImage" src="image.png" alt="Obraz" />
+    </div>
+  </div>
+
+  <script>
+    const allTeams = [
+      "VENO VICO FLICKZY",
+      "MALIBUCA P1NGFNZ WOX",
+      "MARIUSCOW VANYAK3K PIXIE",
+      "FREDOXIE PABLOWINGU TJINO",
+      "DARM DEMUŚ PIXX",
+      "MERSTACH QUEASY SWIZZY",
+      "TAYSON CHICO HRIS",
+      "SETTY JAPKO PANZER",
+      "FOCUS MIKSON UPL",
+      "IDROP KAMI CHARYY",
+      "MRSAVAGE REZON CHAP",
+      "ACORN POLLO AJERSS",
+      "PETERBOT RITUAL COLD",
+      "CLIX EOMZO HIGGS",
+      "COOPER REET CURLY",
+      "AMINISHED BRAYDZ VISXALS",
+      "KHANADA RAPID BOLTZ",
+      "MUZ SHADOW SPHINX",
+      "BACCA PARZ PXMP",
+      "ARK SALKO SXHOOL",
+      "EPIKWHALE PAPER VICTERV",
+      "K1NG FAZER PHZIN",
+      "CADU STRYKER TISCO",
+      "GABZERA SCARPA WEY",
+      "KOYOTA YUMA RISE",
+      "RAITO RAZL TEITEI",
+      "MEREM WICKESY BUYURIRU",
+      "FKS HERO 5AALD",
+      "REW SAAD SNOWY",
+      "BALOR ADAPTER MANSOUR",
+      "ALEX ANON RESIGNZ",
+      "TINKA CAZI ASPECT",
+      "VORTEXM MOUNTAIN GOOFY",
+    ];
+
+    const teamsListDiv = document.getElementById("teamsList");
+    const mainTableBody = document.querySelector("#mainTable tbody");
+
+    let selectedTeam = null;
+
+    function saveState() {
+      const tableState = [];
+      mainTableBody.querySelectorAll("tr").forEach((tr) => {
+        const tdTeam = tr.children[1];
+        tableState.push(tdTeam.textContent || "");
+      });
+      localStorage.setItem("teamsTableState", JSON.stringify(tableState));
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem("teamsTableState");
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch {
+          return null;
+        }
+      }
+      return null;
+    }
+
+    function renderTeamsList() {
+      teamsListDiv.innerHTML = "";
+      const assignedTeams = Array.from(
+        mainTableBody.querySelectorAll("td.team-cell.assigned")
+      ).map((td) => td.textContent);
+      const availableTeams = allTeams.filter(
+        (team) => !assignedTeams.includes(team)
+      );
+
+      availableTeams.forEach((team) => {
+        const div = document.createElement("div");
+        div.classList.add("team-item");
+        div.textContent = team;
+        div.dataset.team = team;
+
+        div.addEventListener("click", () => {
+          document
+            .querySelectorAll(".team-item.selected")
+            .forEach((el) => el.classList.remove("selected"));
+          div.classList.add("selected");
+          selectedTeam = team;
+        });
+
+        teamsListDiv.appendChild(div);
+      });
+    }
+
+    function createTable() {
+      mainTableBody.innerHTML = "";
+      const savedState = loadState();
+
+      for (let i = 1; i <= 33; i++) {
+        const tr = document.createElement("tr");
+
+        const tdPlace = document.createElement("td");
+        tdPlace.textContent = i;
+        tdPlace.classList.add("place");
+
+        const tdTeam = document.createElement("td");
+        tdTeam.classList.add("team-cell");
+
+        if (savedState && savedState[i - 1]) {
+          tdTeam.textContent = savedState[i - 1];
+          if (tdTeam.textContent !== "") {
+            tdTeam.classList.add("assigned");
+          }
+        }
+
+        tr.appendChild(tdPlace);
+        tr.appendChild(tdTeam);
+
+        tdTeam.addEventListener("click", () => {
+          const teamName = tdTeam.textContent.trim();
+          const selectedCell = document.querySelector(
+            "td.team-cell.selected-cell"
+          );
+
+          if (!teamName && selectedTeam !== null) {
+            // Usuń starą przypisaną drużynę
+            const assignedCells = Array.from(
+              mainTableBody.querySelectorAll("td.team-cell.assigned")
+            );
+            const oldIndex = assignedCells.findIndex(
+              (td) => td.textContent === selectedTeam
+            );
+            if (oldIndex > -1) {
+              assignedCells[oldIndex].textContent = "";
+              assignedCells[oldIndex].classList.remove("assigned");
+            }
+
+            tdTeam.textContent = selectedTeam;
+            tdTeam.classList.add("assigned");
+
+            document
+              .querySelectorAll(".team-item.selected")
+              .forEach((el) => el.classList.remove("selected"));
+            selectedTeam = null;
+            renderTeamsList();
+            saveState();
+            return;
+          }
+
+          if (selectedCell && selectedCell !== tdTeam) {
+            // Zamiana miejscami drużyn w dwóch komórkach
+            const temp = tdTeam.textContent;
+            tdTeam.textContent = selectedCell.textContent;
+            selectedCell.textContent = temp;
+
+            tdTeam.classList.toggle("assigned", tdTeam.textContent !== "");
+            selectedCell.classList.toggle("assigned", selectedCell.textContent !== "");
+
+            selectedCell.classList.remove("selected-cell");
+            selectedTeam = null;
+            renderTeamsList();
+            saveState();
+            return;
+          }
+
+          if (selectedCell === tdTeam) {
+            if (teamName) {
+              tdTeam.textContent = "";
+              tdTeam.classList.remove("assigned");
+              tdTeam.classList.remove("selected-cell");
+              selectedTeam = null;
+              renderTeamsList();
+              saveState();
+            }
+          } else if (teamName) {
+            document
+              .querySelectorAll("td.team-cell.selected-cell")
+              .forEach((el) => el.classList.remove("selected-cell"));
+            tdTeam.classList.add("selected-cell");
+            selectedTeam = null;
+            renderTeamsList();
+            saveState();
+          }
+        });
+
+        mainTableBody.appendChild(tr);
+      }
+    }
+
+    createTable();
+    renderTeamsList();
+  </script>
+</body>
+</html>

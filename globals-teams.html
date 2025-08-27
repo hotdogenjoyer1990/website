@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EUCompetitive</title>
+
+  <!-- Czcionka Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="logo.png" type="image/png" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #131313;
+      font-family: 'Roboto', sans-serif;
+      color: white;
+    }
+
+    .navbar {
+      position: relative;
+      width: 100%;
+      background-color: #2c2c2c;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .navbar img {
+      height: 50px;
+      z-index: 2;
+    }
+
+    .nav-buttons {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      z-index: 1;
+    }
+
+    .nav-button {
+      background-color: #ffd700;
+      color: black;
+      font-weight: bold;
+      padding: 15px 15px;
+      text-decoration: none;
+      border-radius: 6px;
+      min-width: 130px;
+      text-align: center;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .nav-button:hover {
+      opacity: 0.9;
+      transform: scale(1.03);
+    }
+
+    .social-icons {
+      margin-left: auto;
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-link {
+      color: #ffd700;
+      font-size: 24px;
+      transition: transform 0.2s ease, opacity 0.2s;
+    }
+
+    .social-link:hover {
+      transform: scale(1.2);
+      opacity: 0.9;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 40px 0 30px 0;
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+      font-size: 2.2em;
+    }
+
+    .container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding: 0 20px 40px 20px;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 240px;
+    }
+
+    .header {
+      background-color: #ffd700;
+      color: black;
+      font-weight: bold;
+      padding: 15px 20px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      user-select: none;
+      font-size: 1.25em;
+      border: 2px solid black;
+      box-sizing: border-box;
+    }
+
+    .team-box {
+      background-color: rgb(31, 31, 31);
+      color: white;
+      width: 100%;
+      text-align: center;
+      padding: 15px 0;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      user-select: none;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1em;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .team-box:hover {
+      background-color: #333;
+      border-color: #ffd700;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+    }
+
+    /* Popup Styles - MADE LARGER */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      display: none;
+      z-index: 1000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .popup-content {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+
+      border-radius: 15px;
+      width: 95%; /* Increased from 90% */
+      max-width: 1200px; /* Increased from 900px */
+      max-height: 95vh; /* Increased from 90vh */
+      overflow-y: auto;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      animation: slideIn 0.3s ease;
+    }
+
+    .popup-header {
+      background: linear-gradient(45deg, #ffd700, #ffed4e);
+      color: black;
+      padding: 20px;
+      border-radius: 13px 13px 0 0;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.5em;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 2em;
+      color: black;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .close-btn:hover {
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .popup-body {
+      padding: 40px; /* Increased from 30px */
+    }
+
+    .season-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .tab-btn {
+      background-color: #333;
+      color: white;
+      border: 2px solid #555;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      font-size: 0.9em;
+    }
+
+    .tab-btn.active {
+      background-color: #ffd700;
+      color: black;
+      border-color: #ffd700;
+    }
+
+    .tab-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 10px rgba(255, 215, 0, 0.3);
+    }
+
+    .season-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .season-content.active {
+      display: block;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: linear-gradient(145deg, #333, #2a2a2a);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid #444;
+      transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      border-color: #ffd700;
+    }
+
+    .stat-number {
+      font-size: 2em;
+      font-weight: 700;
+      color: #ffd700;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 0.9em;
+      color: #ccc;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .dropspots {
+      background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      border: 1px solid #444;
+    }
+
+    .dropspots h4 {
+      color: #ffd700;
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 1.2em;
+    }
+
+    .dropspot-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .dropspot-item {
+      background-color: #444;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      border: 1px solid #555;
+      transition: all 0.3s ease;
+    }
+
+    .dropspot-item:hover {
+      background-color: #ffd700;
+      color: black;
+      border-color: #ffd700;
+    }
+
+    /* Updated Single Dropspot Styles - MADE BIGGER */
+    .dropspot-single {
+      text-align: center;
+    }
+
+    .dropspot-name {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #ffd700;
+      margin-bottom: 15px;
+    }
+
+    .dropspot-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    .dropspot-image img {
+      width: 100%;
+      max-width: 450px; /* Increased from 200px */
+      height: auto;
+      max-height: 300px; /* Increased from 130px */
+      object-fit: contain;
+      border-radius: 8px;
+      border: 2px solid #444;
+      transition: all 0.3s ease;
+    }
+
+    .dropspot-image img:hover {
+      border-color: #ffd700;
+      transform: scale(1.05);
+    }
+
+    /* Placements Sections */
+    .placements-section {
+      background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+      border: 1px solid #444;
+    }
+
+    .placements-section h4 {
+      color: #ffd700;
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 1.1em;
+    }
+
+    .placements-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .placement-item {
+      background: linear-gradient(145deg, #444, #333);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      border: 1px solid #555;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .placement-item:hover {
+      background: linear-gradient(145deg, #ffd700, #ffed4e);
+      color: black;
+      border-color: #ffd700;
+      transform: translateY(-2px);
+    }
+
+    /* Drop Spots Summary */
+    .dropspots-summary {
+      background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+      border-radius: 10px;
+      padding: 25px;
+      border: 1px solid #444;
+      margin-top: 20px;
+    }
+
+    .dropspots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Increased from 140px */
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .dropspot-summary-card {
+      background: linear-gradient(145deg, #333, #2a2a2a);
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      border: 1px solid #444;
+      transition: all 0.3s ease;
+    }
+
+    .dropspot-summary-card:hover {
+      transform: translateY(-3px);
+      border-color: #ffd700;
+      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+    }
+
+    .dropspot-season {
+      font-size: 0.8em;
+      color: #ccc;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .dropspot-summary-card .dropspot-name {
+      font-size: 0.9em;
+      font-weight: 600;
+      color: #ffd700;
+      margin-bottom: 10px;
+    }
+
+    .dropspot-summary-card .dropspot-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 120px; /* Increased from 80px */
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 6px;
+      border: 2px solid #444;
+    }
+
+    .dropspot-summary-card .dropspot-image img {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      object-fit: cover;
+      border: none;
+      border-radius: 0;
+      transition: all 0.3s ease;
+    }
+
+    .dropspot-summary-card .dropspot-image img:hover {
+      border-color: #ffd700;
+      transform: scale(1.05);
+    }
+
+    /* Line Chart Styles */
+    .line-chart {
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    #placementChart {
+      background: linear-gradient(145deg, #333, #2a2a2a);
+      border-radius: 8px;
+      border: 1px solid #444;
+    }
+
+    /* Chart Styles */
+    .chart-container {
+      background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+      border: 1px solid #444;
+    }
+
+    .chart-title {
+      color: #ffd700;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.2em;
+      font-weight: 600;
+    }
+
+    .chart {
+      height: 200px;
+      position: relative;
+      display: flex;
+      align-items: end;
+      justify-content: space-around;
+      padding: 20px 0;
+    }
+
+    .chart-bar {
+      background: linear-gradient(to top, #ffd700, #ffed4e);
+      border-radius: 4px 4px 0 0;
+      min-height: 20px;
+      width: 60px;
+      position: relative;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .chart-bar:hover {
+      filter: brightness(1.2);
+      transform: scale(1.05);
+    }
+
+    .chart-label {
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8em;
+      color: #ccc;
+      white-space: nowrap;
+    }
+
+    .chart-value {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8em;
+      color: #ffd700;
+      font-weight: bold;
+    }
+
+    .summary-section {
+      background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+      border-radius: 10px;
+      padding: 25px;
+      border: 1px solid #444;
+      margin-top: 20px;
+    }
+
+    .summary-title {
+      color: #ffd700;
+      font-size: 1.3em;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .summary-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
+    .summary-stat {
+      text-align: center;
+      padding: 15px;
+      background: linear-gradient(145deg, #333, #2a2a2a);
+      border-radius: 8px;
+      border: 1px solid #444;
+    }
+
+    .summary-stat-number {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: #ffd700;
+      margin-bottom: 5px;
+    }
+
+    .summary-stat-label {
+      font-size: 0.8em;
+      color: #ccc;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { 
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+      }
+      to { 
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .navbar {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        padding: 10px;
+      }
+
+      .navbar img {
+        margin-bottom: 10px;
+      }
+
+      .nav-buttons {
+        position: static;
+        transform: none;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+
+      .social-icons {
+        justify-content: center;
+        margin-top: 10px;
+      }
+
+      .popup-content {
+        width: 98%; /* Slightly increased for mobile too */
+        max-height: 98vh; /* Increased for mobile */
+      }
+
+      .popup-body {
+        padding: 25px; /* Increased from 20px */
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .chart-bar {
+        width: 40px;
+      }
+
+      /* Mobile adjustments for larger dropspot images */
+      .dropspot-image img {
+        max-width: 250px;
+        max-height: 170px;
+      }
+
+      .dropspot-summary-card .dropspot-image {
+        height: 100px;
+      }
+
+      .dropspots-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
+    }
+
+    .navbar img {
+      height: 70px;
+      z-index: 2;
+    }
+
+    .logo-text {
+  font-size: 30px;
+  font-weight: bold;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+}
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <img src="logo.png" alt="logo" />
+    <span class="logo-text">EUCompetitive</span>
+
+    <div class="nav-buttons">
+      <a href="maps.html" class="nav-button">MAPS</a>
+      <a href="globals-map.html" class="nav-button">GLOBALS MAP</a>
+      <a href="globals-teams.html" class="nav-button">GLOBALS TEAMS</a>
+      <a href="fncs.html" class="nav-button">FNCS</a>
+      <a href="tournaments.html" class="nav-button">SCHEDULE</a>
+      <a href="stats.html" class="nav-button">STATS</a>
+    </div>
+
+    <div class="social-icons">
+      <a href="https://x.com/kxrr0" target="_blank" class="social-link"><i class="fab fa-x-twitter"></i></a>
+      <a href="https://www.twitch.tv/kxrr0" target="_blank" class="social-link"><i class="fab fa-twitch"></i></a>
+      <a href="https://discord.gg/zGuzHT6y" target="_blank" class="social-link"><i class="fab fa-discord"></i></a>
+    </div>
+  </div>
+
+  <h1>FNCS GLOBAL CHAMPIONSHIP 2025 TEAMS</h1>
+
+  <div class="container">
+    <div class="column">
+      <div class="header">EU</div>
+      <div class="team-box" onclick="openTeamPopup('VENO VICO FLICKZY')">VENO VICO FLICKZY</div>
+      <div class="team-box" onclick="openTeamPopup('MALIBUCA P1NGFNZ WOX')">MALIBUCA P1NGFNZ WOX</div>
+      <div class="team-box" onclick="openTeamPopup('VANYAK3K MARIUSCOW PIXIE')">VANYAK3K MARIUSCOW PIXIE</div>
+      <div class="team-box" onclick="openTeamPopup('FREDOXIE PABLOWINGU TJINO')">FREDOXIE PABLOWINGU TJINO</div>
+      <div class="team-box" onclick="openTeamPopup('DARM DEMUŚ PIXX')">DARM DEMUŚ PIXX</div>
+      <div class="team-box" onclick="openTeamPopup('QUEASY SWIZZY MERSTACH')">QUEASY SWIZZY MERSTACH</div>
+      <div class="team-box" onclick="openTeamPopup('TAYSON CHICO HRIS')">TAYSON CHICO HRIS</div>
+      <div class="team-box" onclick="openTeamPopup('SETTY JAPKO PANZER')">SETTY JAPKO PANZER</div>
+      <div class="team-box" onclick="openTeamPopup('FOCUS MIKSON UPL')">FOCUS MIKSON UPL</div>
+      <div class="team-box" onclick="openTeamPopup('IDROP KAMI CHARYY')">IDROP KAMI CHARYY</div>
+      <div class="team-box" onclick="openTeamPopup('MRSAVAGE REZON CHAP')">MRSAVAGE REZON CHAP</div>
+    </div>
+
+    <div class="column">
+      <div class="header">NAC</div>
+      <div class="team-box" onclick="openTeamPopup('ACORN POLLO AJERSS')">ACORN POLLO AJERSS</div>
+      <div class="team-box" onclick="openTeamPopup('PETERBOT RITUAL COLD')">PETERBOT RITUAL COLD</div>
+      <div class="team-box" onclick="openTeamPopup('CLIX EOMZO HIGGS')">CLIX EOMZO HIGGS</div>
+      <div class="team-box" onclick="openTeamPopup('COOPER REET CURLY')">COOPER REET CURLY</div>
+      <div class="team-box" onclick="openTeamPopup('AMINISHED BRAYDZ VISXALS')">AMINISHED BRAYDZ VISXALS</div>
+      <div class="team-box" onclick="openTeamPopup('KHANADA RAPID BOLTZ')">KHANADA RAPID BOLTZ</div>
+      <div class="team-box" onclick="openTeamPopup('MUZ SHADOW SPHINX')">MUZ SHADOW SPHINX</div>
+    </div>
+
+    <div class="column">
+      <div class="header">NAW</div>
+      <div class="team-box" onclick="openTeamPopup('BACCA PARZ PXMP')">BACCA PARZ PXMP</div>
+      <div class="team-box" onclick="openTeamPopup('ARK SALKO SXHOOL')">ARK SALKO SXHOOL</div>
+      <div class="team-box" onclick="openTeamPopup('EPIKWHALE PAPER VICTERV')">EPIKWHALE PAPER VICTERV</div>
+    </div>
+
+    <div class="column">
+      <div class="header">BR</div>
+      <div class="team-box" onclick="openTeamPopup('K1NG FAZER PHZIN')">K1NG FAZER PHZIN</div>
+      <div class="team-box" onclick="openTeamPopup('CADU STRYKER TISCO')">CADU STRYKER TISCO</div>
+      <div class="team-box" onclick="openTeamPopup('GABZERA SCARPA WEY')">GABZERA SCARPA WEY</div>
+    </div>
+
+    <div class="column">
+      <div class="header">ASIA</div>
+      <div class="team-box" onclick="openTeamPopup('KOYOTA YUMA RISE')">KOYOTA YUMA RISE</div>
+      <div class="team-box" onclick="openTeamPopup('RAITO RAZL TEITEI')">RAITO RAZL TEITEI</div>
+      <div class="team-box" onclick="openTeamPopup('MEREM BUYURIRU WICKESY')">MEREM BUYURIRU WICKESY</div>
+    </div>
+
+    <div class="column">
+      <div class="header">ME</div>
+      <div class="team-box" onclick="openTeamPopup('FKS HERO 5AALD')">FKS HERO 5AALD</div>
+      <div class="team-box" onclick="openTeamPopup('REW SAAD SNOWY')">REW SAAD SNOWY</div>
+      <div class="team-box" onclick="openTeamPopup('BALOR ADAPTER MANSOUR')">BALOR ADAPTER MANSOUR</div>
+    </div>
+
+    <div class="column">
+      <div class="header">OCE</div>
+      <div class="team-box" onclick="openTeamPopup('ALEX ANON RESIGNZ')">ALEX ANON RESIGNZ</div>
+      <div class="team-box" onclick="openTeamPopup('TINKA CAZI ASPECT')">TINKA CAZI ASPECT</div>
+      <div class="team-box" onclick="openTeamPopup('VORTEXM MOUNTAIN GOOFY')">VORTEXM MOUNTAIN GOOFY</div>
+    </div>
+  </div>
+
+  <!-- Popup -->
+  <div id="teamPopup" class="popup-overlay" onclick="closePopup(event)">
+    <div class="popup-content" onclick="event.stopPropagation()">
+      <div class="popup-header">
+        <span id="teamName">Team Name</span>
+        <button class="close-btn" onclick="closePopup()">&times;</button>
+      </div>
+      <div class="popup-body">
+        <!-- Season Tabs -->
+        <div class="season-tabs">
+          <button class="tab-btn active" onclick="showSeason('ch6s1')">CH6 S1</button>
+          <button class="tab-btn" onclick="showSeason('ch6s2')">CH6 S2</button>
+          <button class="tab-btn" onclick="showSeason('ch6s3')">CH6 S3</button>
+          <button class="tab-btn" onclick="showSeason('ch6s4')">CH6 S4</button>
+          <button class="tab-btn" onclick="showSeason('summary')">Summary</button>
+        </div>
+
+        <!-- Season Contents -->
+        <div id="ch6s1" class="season-content active">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-number" id="ch6s1-div1-count">5</div>
+              <div class="stat-label">Division 1 Finals Qualified</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="ch6s1-fncs-placement">7</div>
+              <div class="stat-label">FNCS Grand Finals Placement</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="ch6s1-best-div1">3</div>
+              <div class="stat-label">Best Division 1 Finals Placement</div>
+            </div>
+          </div>
+          
+          <!-- Division 1 Placements -->
+          <div class="placements-section">
+            <h4><i class="fas fa-trophy"></i> Division 1 Finals Placements</h4>
+            <div class="placements-list" id="ch6s1-div1-placements">
+              <span class="placement-item">11th</span>
+              <span class="placement-item">12th</span>
+              <span class="placement-item">33rd</span>
+              <span class="placement-item">45th</span>
+              <span class="placement-item">23rd</span>
+            </div>
+          </div>
+
+          <div class="dropspots">
+            <h4><i class="fas fa-map-marker-alt"></i> Primary Drop Spot</h4>
+            <div class="dropspot-single" id="ch6s1-drop">
+              <div class="dropspot-name">Tilted Towers</div>
+              <div class="dropspot-image">
+                <img src="https://via.placeholder.com/300x200/333333/FFD700?text=POI" alt="Tilted Towers" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="ch6s2" class="season-content">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-number" id="ch6s2-div1-count">5</div>
+              <div class="stat-label">Division 1 Finals Qualified</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="ch6s2-fncs-placement">12</div>
+              <div class="stat-label">FNCS Grand Finals Placement</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="ch6s2-best-div1">8</div>
+              <div class="stat-label">Best Division 1 Finals Placement</div>
+            </div>
+          </div>
+          
+          <!-- Division 1 Placements -->
+          <div class="placements-section">
+            <h4><i class="fas fa-trophy"></i> Division 1 Finals Placements</h4>
+            <div class="placements-list" id="ch6s2-div1-placements">
+              <span class="placement-item">8th</span>
+              <span class="placement-item">15th</span>
+              <span class="placement-item">22nd</span>
+              <span class="placement-item">31st</span>
+              <span class="placement-item">19th</span>
+            </div>
+          </div>
+
+          <div class="dropspots">
+            <h4><i class="fas fa-map-marker-alt"></i> Primary Drop Spot</h4>
+            <div class="dropspot-single" id="ch6s2-drop">
+              <div class="dropspot-name">Lazy Lake</div>
+              <div class="dropspot-image">
+                <img src="https://via.placeholder.com/300x200/333333/FFD700?text=POI" alt="Lazy Lake" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="ch6s3" class="season-content">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-number" id="ch6s3-div1-count">2</div>
+              <div class="stat-label">Division 1 Finals Qualified</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="ch6s3-fncs-placement">18</div>
+              <div class="stat-label">FNCS Grand Finals Placement</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="ch6s3-best-div1">15</div>
+              <div class="stat-label">Best Division 1 Finals Placement</div>
+            </div>
+          </div>
+          
+          <!-- Division 1 Placements -->
+          <div class="placements-section">
+            <h4><i class="fas fa-trophy"></i> Division 1 Finals Placements</h4>
+            <div class="placements-list" id="ch6s3-div1-placements">
+              <span class="placement-item">15th</span>
+              <span class="placement-item">28th</span>
+            </div>
+          </div>
+
+          <div class="dropspots">
+            <h4><i class="fas fa-map-marker-alt"></i> Primary Drop Spot</h4>
+            <div class="dropspot-single" id="ch6s3-drop">
+              <div class="dropspot-name">Craggy Cliffs</div>
+              <div class="dropspot-image">
+                <img src="https://via.placeholder.com/300x200/333333/FFD700?text=POI" alt="Craggy Cliffs" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="ch6s4" class="season-content">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-number" id="ch6s4-div1-count">3</div>
+              <div class="stat-label">Division 1 Finals Qualified</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="ch6s4-avg-placement">14.2</div>
+              <div class="stat-label">Average Placement</div>
+            </div>
+          </div>
+          
+          <!-- Division 1 Placements -->
+          <div class="placements-section">
+            <h4><i class="fas fa-trophy"></i> Division 1 Finals Placements</h4>
+            <div class="placements-list" id="ch6s4-div1-placements">
+              <span class="placement-item">6th</span>
+              <span class="placement-item">21st</span>
+              <span class="placement-item">16th</span>
+            </div>
+          </div>
+
+          <div class="dropspots">
+            <h4><i class="fas fa-map-marker-alt"></i> Primary Drop Spot</h4>
+            <div class="dropspot-single" id="ch6s4-drop">
+              <div class="dropspot-name">Catty Corner</div>
+              <div class="dropspot-image">
+                <img src="https://via.placeholder.com/300x200/333333/FFD700?text=POI" alt="Catty Corner" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="summary" class="season-content">
+          <div class="summary-section">
+            <div class="summary-title">Chapter 6 Overall Statistics</div>
+            <div class="summary-stats">
+              <div class="summary-stat">
+                <div class="summary-stat-number" id="ch6s1-fncs-summary">TBD</div>
+                <div class="summary-stat-label">CH6 S1 FNCS</div>
+              </div>
+              <div class="summary-stat">
+                <div class="summary-stat-number" id="ch6s2-fncs-summary">TBD</div>
+                <div class="summary-stat-label">CH6 S2 FNCS</div>
+              </div>
+              <div class="summary-stat">
+                <div class="summary-stat-number" id="ch6s3-fncs-summary">TBD</div>
+                <div class="summary-stat-label">CH6 S3 FNCS</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Drop Spots Summary -->
+          <div class="dropspots-summary">
+            <div class="summary-title">Chapter 6 Drop Spots Overview</div>
+            <div class="dropspots-grid">
+              <div class="dropspot-summary-card">
+                <div class="dropspot-season">Season 1</div>
+                <div class="dropspot-name" id="summary-s1-name">Tilted Towers</div>
+                <div class="dropspot-image">
+                  <img src="https://via.placeholder.com/180x120/333333/FFD700?text=S1+POI" alt="Season 1 POI" id="summary-s1-img" />
+                </div>
+              </div>
+              <div class="dropspot-summary-card">
+                <div class="dropspot-season">Season 2</div>
+                <div class="dropspot-name" id="summary-s2-name">Lazy Lake</div>
+                <div class="dropspot-image">
+                  <img src="https://via.placeholder.com/180x120/333333/FFD700?text=S2+POI" alt="Season 2 POI" id="summary-s2-img" />
+                </div>
+              </div>
+              <div class="dropspot-summary-card">
+                <div class="dropspot-season">Season 3</div>
+                <div class="dropspot-name" id="summary-s3-name">Craggy Cliffs</div>
+                <div class="dropspot-image">
+                  <img src="https://via.placeholder.com/180x120/333333/FFD700?text=S3+POI" alt="Season 3 POI" id="summary-s3-img" />
+                </div>
+              </div>
+              <div class="dropspot-summary-card">
+                <div class="dropspot-season">Season 4</div>
+                <div class="dropspot-name" id="summary-s4-name">Catty Corner</div>
+                <div class="dropspot-image">
+                  <img src="https://via.placeholder.com/180x120/333333/FFD700?text=S4+POI" alt="Season 4 POI" id="summary-s4-img" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Team data - add all teams here with their individual stats
+    const teamData = {
+      // EU TEAMS
+// EU TEAMS
+
+'VENO VICO FLICKZY': {
+        ch6s1: { fncsPlacement: 1, div1Count: 5, bestDiv1: 1, div1Placements: ['1st', '2nd', '1st', '4th', '3rd'], dropSpot: 'Flooded Frogs', dropSpotImg: 'FloodedFrogs.png' },
+        ch6s2: { fncsPlacement: 6, div1Count: 5, bestDiv1: 1, div1Placements: ['2nd', '5th', '1st', '19th', '13th'], dropSpot: 'Mine Entrance 2', dropSpotImg: 'MineEntrance2.png' },
+        ch6s3: { fncsPlacement: 2, div1Count: 2, bestDiv1: 2, div1Placements: ['12th', '2nd'], dropSpot: 'Brutal Boxcars', dropSpotImg: 'BrutalBoxcars.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['11th', '26th'], dropSpot: 'Canyon Crossing', dropSpotImg: 'CanyonCrossing.png' },
+        summary: { s1Fncs: '1st', s2Fncs: '6th', s3Fncs: '2nd' }
+      },
+      'MALIBUCA P1NGFNZ WOX': {
+        ch6s1: { fncsPlacement: 2, div1Count: 5, bestDiv1: 2, div1Placements: ['14th', '5th', '7th', '2nd', '4th'], dropSpot: 'Nightshift Forest', dropSpotImg: 'NightshiftForest.png' },
+        ch6s2: { fncsPlacement: 4, div1Count: 4, bestDiv1: 2, div1Placements: ['3rd', '2nd', '2nd', '6th'], dropSpot: 'Lonewolf Lair', dropSpotImg: 'LonewolfLair.png' },
+        ch6s3: { fncsPlacement: 23, div1Count: 2, bestDiv1: 3, div1Placements: ['7th', '3rd'], dropSpot: 'Demons Domain', dropSpotImg: 'DemonsDomain.png' },
+        ch6s4: { div1Count: 0, avgPlacement: '-', div1Placements: [], dropSpot: 'Outpost Enclave', dropSpotImg: 'OutpostEnclave.png' },
+        summary: { s1Fncs: '2nd', s2Fncs: '4th', s3Fncs: '23rd' }
+      },
+      'VANYAK3K MARIUSCOW PIXIE': {
+        ch6s1: { fncsPlacement: 3, div1Count: 2, bestDiv1: 2, div1Placements: ['3rd', '2nd'], dropSpot: 'Kappa Kappa Factory', dropSpotImg: 'KappaKappaFactory.png' },
+        ch6s2: { fncsPlacement: 1, div1Count: 5, bestDiv1: 1, div1Placements: ['4th', '4th', '15th', '1st', '12th'], dropSpot: 'Flooded Frogs', dropSpotImg: 'FloodedFrogs.png' },
+        ch6s3: { fncsPlacement: 3, div1Count: 2, bestDiv1: 1, div1Placements: ['1st', '4th'], dropSpot: 'Flooded Frogs', dropSpotImg: 'FloodedFrogs.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['7th', '11th'], dropSpot: 'O.X.R HQ', dropSpotImg: 'OXRHQ.png' },
+        summary: { s1Fncs: '3rd', s2Fncs: '1st', s3Fncs: '3rd' }
+      },
+      'FREDOXIE PABLOWINGU TJINO': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: 2, div1Count: 2, bestDiv1: 3, div1Placements: ['29th', '3rd'], dropSpot: 'Masked Meadows', dropSpotImg: 'MaskedMeadows.png' },
+        ch6s3: { fncsPlacement: 1, div1Count: 2, bestDiv1: 1, div1Placements: ['14th', '1st'], dropSpot: 'Supernova Academy', dropSpotImg: 'SupernovaAcademy.png' },
+        ch6s4: { div1Count: 1, avgPlacement: '-', div1Placements: ['32nd'], dropSpot: 'Rangers Ruin', dropSpotImg: 'RangersRuin.png' },
+        summary: { s1Fncs: '-', s2Fncs: '2nd', s3Fncs: '1st' }
+      },
+      'DARM DEMUŚ PIXX': {
+        ch6s1: { fncsPlacement: 5, div1Count: 4, bestDiv1: 1, div1Placements: ['25th', '1st', '9th', '15th'], dropSpot: 'Pumped Power', dropSpotImg: 'PumpedPower.png' },
+        ch6s2: { fncsPlacement: 3, div1Count: 5, bestDiv1: 1, div1Placements: ['12th', '20th', '8th', '20th', '1st'], dropSpot: 'Pumped Power', dropSpotImg: 'PumpedPower.png' },
+        ch6s3: { fncsPlacement: 17, div1Count: 1, bestDiv1: 26, div1Placements: ['26th'], dropSpot: 'Utopia City', dropSpotImg: 'UtopiaCity.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['13th', '2nd'], dropSpot: 'Rolling Blossoms Farm', dropSpotImg: 'RollingBlossomsFarm.png' },
+        summary: { s1Fncs: '5th', s2Fncs: '3rd', s3Fncs: '17th' }
+      },
+      'QUEASY SWIZZY MERSTACH': {
+        ch6s1: { fncsPlacement: 4, div1Count: 4, bestDiv1: 5, div1Placements: ['6th', '27th', '5th', '8th'], dropSpot: 'Seaport City', dropSpotImg: 'SeaportCity.png' },
+        ch6s2: { fncsPlacement: 5, div1Count: 3, bestDiv1: 1, div1Placements: ['1st', '1st', '6th'], dropSpot: 'Seaport City', dropSpotImg: 'SeaportCity.png' },
+        ch6s3: { fncsPlacement: 7, div1Count: 1, bestDiv1: 10, div1Placements: ['10th'], dropSpot: 'Demons Domain', dropSpotImg: 'DemonsDomain.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['23rd', '1st'], dropSpot: 'The Hive', dropSpotImg: 'TheHive.png' },
+        summary: { s1Fncs: '4th', s2Fncs: '5th', s3Fncs: '7th' }
+      },
+      'TAYSON CHICO HRIS': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: 7, div1Count: 3, bestDiv1: 8, div1Placements: ['9th', '16th', '8th'], dropSpot: 'Crime City', dropSpotImg: 'CrimeCity.png' },
+        ch6s3: { fncsPlacement: 5, div1Count: 1, bestDiv1: 28, div1Placements: ['28th'], dropSpot: 'Crime City', dropSpotImg: 'CrimeCity.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['8th', '8th'], dropSpot: 'Rangers Ruin', dropSpotImg: 'RangersRuin.png' },
+        summary: { s1Fncs: '-', s2Fncs: '7th', s3Fncs: '5th' }
+      },
+      'SETTY JAPKO PANZER': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s3: { fncsPlacement: 4, div1Count: 1, bestDiv1: 31, div1Placements: ['31st'], dropSpot: 'Lonewolf Lair', dropSpotImg: 'LonewolfLair.png' },
+        ch6s4: { div1Count: 0, avgPlacement: '-', div1Placements: [], dropSpot: 'BURD To Go', dropSpotImg: 'BURDToGo.png' },
+        summary: { s1Fncs: '-', s2Fncs: '-', s3Fncs: '4th' }
+      },
+      'FOCUS MIKSON UPL': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s3: { fncsPlacement: 6, div1Count: 2, bestDiv1: 8, div1Placements: ['8th', '27th'], dropSpot: 'Shogun Solitude', dropSpotImg: 'ShogunSolitude.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['16th', '10th'], dropSpot: 'Shogun Solitude', dropSpotImg: 'ShogunSolitude.png' },
+        summary: { s1Fncs: '-', s2Fncs: '-', s3Fncs: '6th' }
+      },
+      'IDROP KAMI CHARYY': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s3: { fncsPlacement: 8, div1Count: 1, bestDiv1: 13, div1Placements: ['13th'], dropSpot: 'Shining Span', dropSpotImg: 'ShiningSpan.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['4th', '13th'], dropSpot: 'Shining Span', dropSpotImg: 'ShiningSpan.png' },
+        summary: { s1Fncs: '-', s2Fncs: '-', s3Fncs: '8th' }
+      },
+      'MRSAVAGE REZON CHAP': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s3: { fncsPlacement: 9, div1Count: 2, bestDiv1: 21, div1Placements: ['33rd', '21st'], dropSpot: 'Resistance Base', dropSpotImg: 'ResistanceBase.png' },
+        ch6s4: { div1Count: 1, avgPlacement: '-', div1Placements: ['6th'], dropSpot: 'OXR Alpha Base', dropSpotImg: 'OXRAlphaBase.png' },
+        summary: { s1Fncs: '-', s2Fncs: '-', s3Fncs: '9th' }
+      },
+
+      // NAC TEAMS
+      'ACORN POLLO AJERSS': {
+        ch6s1: { fncsPlacement: 1, div1Count: 1, bestDiv1: 3, div1Placements: ['3rd'], dropSpot: 'Nightshift Forest', dropSpotImg: 'NightshiftForest.png' },
+        ch6s2: { fncsPlacement: 5, div1Count: 2, bestDiv1: 2, div1Placements: ['2nd', '3rd'], dropSpot: 'Masked Meadows', dropSpotImg: 'MaskedMeadows.png' },
+        ch6s3: { fncsPlacement: 2, div1Count: 2, bestDiv1: 1, div1Placements: ['10th', '1st'], dropSpot: 'Demons Domain', dropSpotImg: 'DemonsDomain.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['6th', '1st'], dropSpot: 'Demons Debris', dropSpotImg: 'DemonsDebris.png' },
+        summary: { s1Fncs: '1st', s2Fncs: '5th', s3Fncs: '2nd' }
+      },
+      'PETERBOT RITUAL COLD': {
+        ch6s1: { fncsPlacement: 2, div1Count: 5, bestDiv1: 1, div1Placements: ['1st', '1st', '1st', '1st', '1st'], dropSpot: 'Flooded Frogs', dropSpotImg: 'FloodedFrogs.png' },
+        ch6s2: { fncsPlacement: 1, div1Count: 2, bestDiv1: 1, div1Placements: ['1st', '2nd'], dropSpot: 'Crime City', dropSpotImg: 'CrimeCity.png' },
+        ch6s3: { fncsPlacement: 1, div1Count: 2, bestDiv1: 7, div1Placements: ['7th', '19th'], dropSpot: 'Brutal Boxcars', dropSpotImg: 'BrutalBoxcars.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['1st', '2nd'], dropSpot: 'O.X.R HQ', dropSpotImg: 'OXRHQ.png' },
+        summary: { s1Fncs: '2nd', s2Fncs: '1st', s3Fncs: '1st' }
+      },
+      'CLIX EOMZO HIGGS': {
+        ch6s1: { fncsPlacement: 3, div1Count: 1, bestDiv1: 5, div1Placements: ['5th'], dropSpot: 'Lost Lake', dropSpotImg: 'LostLake.png' },
+        ch6s2: { fncsPlacement: 2, div1Count: 5, bestDiv1: 1, div1Placements: ['2nd', '2nd', '4th', '3rd', '1st'], dropSpot: 'Lonewolf Lair', dropSpotImg: 'LonewolfLair.png' },
+        ch6s3: { fncsPlacement: 8, div1Count: 2, bestDiv1: 2, div1Placements: ['2nd', '2nd'], dropSpot: 'Supernova Academy', dropSpotImg: 'SupernovaAcademy.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['4th', '7th'], dropSpot: 'Supernova Academy', dropSpotImg: 'SupernovaAcademy.png' },
+        summary: { s1Fncs: '3rd', s2Fncs: '2nd', s3Fncs: '8th' }
+      },
+      'COOPER REET CURLY': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: 3, div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: 'Flooded Frogs', dropSpotImg: 'FloodedFrogs.png' },
+        ch6s3: { fncsPlacement: 10, div1Count: 2, bestDiv1: 3, div1Placements: ['3rd', '11th'], dropSpot: 'Flooded Frogs', dropSpotImg: 'FloodedFrogs.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['5th', '22nd'], dropSpot: 'First Order Base', dropSpotImg: 'FirstOrderBase.png' },
+        summary: { s1Fncs: '-', s2Fncs: '3rd', s3Fncs: '10th' }
+      },
+      'AMINISHED BRAYDZ VISXALS': {
+        ch6s1: { fncsPlacement: 11, div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: 'Rolling Blossoms Farm', dropSpotImg: 'RollingBlossomsFarm.png' },
+        ch6s2: { fncsPlacement: 4, div1Count: 5, bestDiv1: 6, div1Placements: ['6th', '9th', '15th', '8th', '11th'], dropSpot: 'Foxy Flodgate', dropSpotImg: 'FoxyFlodgate.png' },
+        ch6s3: { fncsPlacement: 4, div1Count: 1, bestDiv1: 11, div1Placements: ['11th'], dropSpot: 'Foxy Flodgate', dropSpotImg: 'FoxyFlodgate.png' },
+        ch6s4: { div1Count: 1, avgPlacement: '-', div1Placements: ['30th'], dropSpot: 'Foxy Flodgate', dropSpotImg: 'FoxyFlodgate.png' },
+        summary: { s1Fncs: '11th', s2Fncs: '4th', s3Fncs: '4th' }
+      },
+      'KHANADA RAPID BOLTZ': {
+        ch6s1: { fncsPlacement: 6, div1Count: 1, bestDiv1: 8, div1Placements: ['8th'], dropSpot: 'Demons Dojo', dropSpotImg: 'DemonsDojo.png' },
+        ch6s2: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s3: { fncsPlacement: 3, div1Count: 2, bestDiv1: 1, div1Placements: ['1st', '4th'], dropSpot: 'Crime City', dropSpotImg: 'CrimeCity.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['7th', '5th'], dropSpot: 'Swarmy Stash', dropSpotImg: 'SwarmyStash.png' },
+        summary: { s1Fncs: '6th', s2Fncs: '-', s3Fncs: '3rd' }
+      },
+      'MUZ SHADOW SPHINX': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s3: { fncsPlacement: 5, div1Count: 2, bestDiv1: 5, div1Placements: ['6th', '5th'], dropSpot: 'Resistance Base', dropSpotImg: 'ResistanceBase.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['25th','13th'], dropSpot: 'Resistance Base', dropSpotImg: 'ResistanceBase.png' },
+        summary: { s1Fncs: '-', s2Fncs: '-', s3Fncs: '5th' }
+      },
+
+      // NAW TEAMS
+      'BACCA PARZ PXMP': {
+        ch6s1: { fncsPlacement: 1, div1Count: 4, bestDiv1: 1, div1Placements: ['1st', '1st', '3rd', '5th'], dropSpot: 'Masked Meadows', dropSpotImg: 'MaskedMeadows.png' },
+        ch6s2: { fncsPlacement: 2, div1Count: 5, bestDiv1: 2, div1Placements: ['3rd', '17th', '9th', '14th', '2nd'], dropSpot: 'Masked Meadows', dropSpotImg: 'MaskedMeadows.png' },
+        ch6s3: { fncsPlacement: 1, div1Count: 2, bestDiv1: 7, div1Placements: ['7th', '10th'], dropSpot: 'Demons Domain', dropSpotImg: 'DemonsDomain.png' },
+        ch6s4: { div1Count: 0, avgPlacement: '-', div1Placements: [], dropSpot: 'Rolling Blossoms Farm', dropSpotImg: 'RollingBlossomsFarm.png' },
+        summary: { s1Fncs: '1st', s2Fncs: '2nd', s3Fncs: '1st' }
+      },
+      'ARK SALKO SXHOOL': {
+        ch6s1: { fncsPlacement: 3, div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: 'Nightshift Forest', dropSpotImg: 'NightshiftForest.png' },
+        ch6s2: { fncsPlacement: 1, div1Count: 5, bestDiv1: 1, div1Placements: ['1st', '3rd', '4th', '7th', '3rd'], dropSpot: 'Shiny Shafts', dropSpotImg: 'ShinyShafts.png' },
+        ch6s3: { fncsPlacement: 2, div1Count: 1, bestDiv1: 2, div1Placements: ['2nd'], dropSpot: 'Supernova Academy', dropSpotImg: 'SupernovaAcademy.png' },
+        ch6s4: { div1Count: 0, avgPlacement: '-', div1Placements: [], dropSpot: 'Shiny Shafts', dropSpotImg: 'ShinyShafts.png' },
+        summary: { s1Fncs: '3rd', s2Fncs: '1st', s3Fncs: '2nd' }
+      },
+      'EPIKWHALE PAPER VICTERV': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s3: { fncsPlacement: 3, div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: 'Utopia City', dropSpotImg: 'UtopiaCity.png' },
+        ch6s4: { div1Count: 0, avgPlacement: '-', div1Placements: [], dropSpot: 'Utopia City', dropSpotImg: 'UtopiaCity.png' },
+        summary: { s1Fncs: '-', s2Fncs: '-', s3Fncs: '3rd' }
+      },
+
+      // BR TEAMS
+      'K1NG FAZER PHZIN': {
+        ch6s1: { fncsPlacement: 1, div1Count: 2, bestDiv1: 11, div1Placements: ['13th', '11th'], dropSpot: 'Flooded Frogs', dropSpotImg: 'FloodedFrogs.png' },
+        ch6s2: { fncsPlacement: 5, div1Count: 5, bestDiv1: 1, div1Placements: ['15th', '1st', '1st', '1st', '3rd'], dropSpot: 'Crime City', dropSpotImg: 'CrimeCity.png' },
+        ch6s3: { fncsPlacement: 9, div1Count: 2, bestDiv1: 12, div1Placements: ['12th'], dropSpot: 'Lonewolf Lair', dropSpotImg: 'LonewolfLair.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['8th', '4th'], dropSpot: 'BURD To Go', dropSpotImg: 'BURDToGo.png' },
+        summary: { s1Fncs: '1st', s2Fncs: '5th', s3Fncs: '9th' }
+      },
+      'CADU STRYKER TISCO': {
+        ch6s1: { fncsPlacement: 4, div1Count: 4, bestDiv1: 6, div1Placements: ['15th', '6th', '10th', '9th'], dropSpot: 'Moisty Manor', dropSpotImg: 'MoistyManor.png' },
+        ch6s2: { fncsPlacement: 1, div1Count: 3, bestDiv1: 1, div1Placements: ['22nd', '5th', '1st'], dropSpot: 'Canyon Crossing', dropSpotImg: 'CanyonCrossing.png' },
+        ch6s3: { fncsPlacement: 4, div1Count: 2, bestDiv1: 4, div1Placements: ['6th', '4th'], dropSpot: 'Supernova Academy', dropSpotImg: 'SupernovaAcademy.png' },
+        ch6s4: { div1Count: 1, avgPlacement: '-', div1Placements: ['22nd'], dropSpot: 'Outlaw Oasis', dropSpotImg: 'OutlawOasis.png' },
+        summary: { s1Fncs: '4th', s2Fncs: '1st', s3Fncs: '4th' }
+      },
+      'GABZERA SCARPA WEY': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s3: { fncsPlacement: 1, div1Count: 2, bestDiv1: 8, div1Placements: ['8th', '8th'], dropSpot: 'Demons Domain', dropSpotImg: 'DemonsDomain.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['4th','2nd'], dropSpot: 'BURD To Go', dropSpotImg: 'BURDToGo.png' },
+        summary: { s1Fncs: '-', s2Fncs: '-', s3Fncs: '1st' }
+      },
+
+      // OCE TEAMS
+      'ALEX ANON RESIGNZ': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: 1, div1Count: 5, bestDiv1: 1, div1Placements: ['4th', '2nd', '1st', '1st', '1st'], dropSpot: 'Shiny Shafts', dropSpotImg: 'ShinyShafts.png' },
+        ch6s3: { fncsPlacement: 1, div1Count: 2, bestDiv1: 1, div1Placements: ['1st', '2nd'], dropSpot: 'Demons Domain', dropSpotImg: 'DemonsDomain.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['6th', '7th'], dropSpot: 'Utopia City', dropSpotImg: 'UtopiaCity.png' },
+        summary: { s1Fncs: '-', s2Fncs: '1st', s3Fncs: '1st' }
+      },
+      'TINKA CAZI ASPECT': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s3: { fncsPlacement: 2, div1Count: 2, bestDiv1: 4, div1Placements: ['4th', '4th'], dropSpot: 'Kappa Kappa Factory', dropSpotImg: 'KappaKappaFactory.png' },
+        ch6s4: { div1Count: 2, avgPlacement: 0, div1Placements: ['1st','5th'], dropSpot: 'Kappa Kappa Factory', dropSpotImg: 'KappaKappaFactory.png' },
+        summary: { s1Fncs: '-', s2Fncs: '-', s3Fncs: '2nd' }
+      },
+      'VORTEXM MOUNTAIN GOOFY': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: 3, div1Count: 2, bestDiv1: 3, div1Placements: ['5th','3rd'], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s3: { fncsPlacement: 3, div1Count: 2, bestDiv1: 6, div1Placements: ['9th','6th'], dropSpot: 'Foxy Flodgate', dropSpotImg: 'FoxyFlodgate.png' },
+        ch6s4: { div1Count: 2, avgPlacement: 0, div1Placements: ['8th', '4th'], dropSpot: 'Lovely Lane', dropSpotImg: 'LovelyLane.png' },
+        summary: { s1Fncs: '-', s2Fncs: '3rd', s3Fncs: '3rd' }
+      },
+
+      // ME TEAMS
+      'FKS HERO 5AALD': {
+        ch6s1: { fncsPlacement: 1, div1Count: 5, bestDiv1: 1, div1Placements: ['5th', '3rd', '9th', '1st', '3rd'], dropSpot: 'Brutal Boxcars', dropSpotImg: 'BrutalBoxcars.png' },
+        ch6s2: { fncsPlacement: 1, div1Count: 4, bestDiv1: 1, div1Placements: ['3rd', '14th', '5th', '1st'], dropSpot: 'Lonewolf Lair', dropSpotImg: 'LonewolfLair.png' },
+        ch6s3: { fncsPlacement: 3, div1Count: 2, bestDiv1: 4, div1Placements: ['4th', '9th'], dropSpot: 'Utopia City', dropSpotImg: 'UtopiaCity.png' },
+        ch6s4: { div1Count: 1, avgPlacement: 0, div1Placements: ['7th'], dropSpot: 'Big Bend', dropSpotImg: 'BigBend.png' },
+        summary: { s1Fncs: '1st', s2Fncs: '1st', s3Fncs: '3rd' }
+      },
+      'REW SAAD SNOWY': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: 2, div1Count: 1, bestDiv1: 2, div1Placements: ['2nd'], dropSpot: 'Seaport City', dropSpotImg: 'SeaportCity.png' },
+        ch6s3: { fncsPlacement: 6, div1Count: 1, bestDiv1: 2, div1Placements: ['2nd'], dropSpot: 'Supernova Academy', dropSpotImg: 'SupernovaAcademy.png' },
+        ch6s4: { div1Count: 1, avgPlacement: 0, div1Placements: ['1st'], dropSpot: 'Martial Maneuvers', dropSpotImg: 'MartialManeuvers.png' },
+        summary: { s1Fncs: '-', s2Fncs: '2nd', s3Fncs: '6th' }
+      },
+      'BALOR ADAPTER MANSOUR': {
+        ch6s1: { fncsPlacement: "-", div1Count: '-', bestDiv1: "-", div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: "-", div1Count: '-', bestDiv1: "-", div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s3: { fncsPlacement: 1, div1Count: 1, bestDiv1: 8, div1Placements: ['8th'], dropSpot: 'Foxy Flodgate', dropSpotImg: 'FoxyFlodgate.png' },
+        ch6s4: { div1Count: 2, avgPlacement: 0, div1Placements: ['9th','26th'], dropSpot: 'Pumpin Pipes', dropSpotImg: 'PumpinPipes.png' },
+        summary: { s1Fncs: "-", s2Fncs: "-", s3Fncs: '1st' }
+      },
+
+      // ASIA TEAMS
+      'KOYOTA YUMA RISE': {
+        ch6s1: { fncsPlacement: 1, div1Count: 5, bestDiv1: 1, div1Placements: ['2nd', '4th', '1st', '18th', '1st'], dropSpot: 'Demons Dojo', dropSpotImg: 'DemonsDojo.png' },
+        ch6s2: { fncsPlacement: 4, div1Count: 5, bestDiv1: 1, div1Placements: ['6th', '8th', '1st', '2nd', '5th'], dropSpot: 'Crime City', dropSpotImg: 'CrimeCity.png' },
+        ch6s3: { fncsPlacement: 1, div1Count: 2, bestDiv1: 2, div1Placements: ['2nd', '3rd'], dropSpot: 'Demons Domain', dropSpotImg: 'DemonsDomain.png' },
+        ch6s4: { div1Count: 2, avgPlacement: 0, div1Placements: ['2nd', '3rd'], dropSpot: 'OXR Alpha Base', dropSpotImg: 'OXRAlphaBase.png' },
+        summary: { s1Fncs: '1st', s2Fncs: '4th', s3Fncs: '1st' }
+      },
+      'RAITO RAZL TEITEI': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: ['-', '-', '-', '-', '-'], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: 1, div1Count: 3, bestDiv1: 4, div1Placements: ['4th', '4th', '15th'], dropSpot: 'Masked Meadows', dropSpotImg: 'MaskedMeadows.png' },
+        ch6s3: { fncsPlacement: 2, div1Count: 1, bestDiv1: 19, div1Placements: ['19th'], dropSpot: 'Supernova Academy', dropSpotImg: 'SupernovaAcademy.png' },
+        ch6s4: { div1Count: 2, avgPlacement: 0, div1Placements: ['9th', '2nd'], dropSpot: 'Utopia City', dropSpotImg: 'UtopiaCity.png' },
+        summary: { s1Fncs: '-', s2Fncs: '1st', s3Fncs: '2nd' }
+      },
+      'MEREM BUYURIRU WICKESY': {
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s2: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s3: { fncsPlacement: 3, div1Count: 2, bestDiv1: 2, div1Placements: ['16th', '2nd'], dropSpot: 'Shiny Shafts', dropSpotImg: 'ShinyShafts.png' },
+        ch6s4: { div1Count: 2, avgPlacement: 0, div1Placements: ['13th', '19th'], dropSpot: 'Shiny Shafts', dropSpotImg: 'ShinyShafts.png' },
+        summary: { s1Fncs: '-', s2Fncs: '-', s3Fncs: '3rd' }
+      }
+    };
+
+
+    let currentTeam = '';
+
+    function openTeamPopup(teamName) {
+      currentTeam = teamName;
+      document.getElementById('teamName').textContent = teamName;
+      document.getElementById('teamPopup').style.display = 'block';
+      
+      // Load team data if available
+      if (teamData[teamName]) {
+        loadTeamData(teamData[teamName]);
+      } else {
+        // Generate random data for teams not in the dataset
+        loadRandomData();
+      }
+    }
+
+    function closePopup(event) {
+      if (event && event.target !== event.currentTarget) return;
+      document.getElementById('teamPopup').style.display = 'none';
+    }
+
+    function showSeason(seasonId) {
+      // Hide all season contents
+      const contents = document.querySelectorAll('.season-content');
+      contents.forEach(content => {
+        content.classList.remove('active');
+      });
+      
+      // Remove active class from all tabs
+      const tabs = document.querySelectorAll('.tab-btn');
+      tabs.forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Show selected season content
+      document.getElementById(seasonId).classList.add('active');
+      
+      // Add active class to clicked tab
+      event.target.classList.add('active');
+    }
+
+    function loadTeamData(data) {
+      // Update CH6 S1 stats
+      document.getElementById('ch6s1-div1-count').textContent = data.ch6s1.div1Count;
+      document.getElementById('ch6s1-fncs-placement').textContent = data.ch6s1.fncsPlacement;
+      document.getElementById('ch6s1-best-div1').textContent = data.ch6s1.bestDiv1;
+      updatePlacements('ch6s1-div1-placements', data.ch6s1.div1Placements);
+      updateDropSpot('ch6s1-drop', data.ch6s1.dropSpot, data.ch6s1.dropSpotImg);
+
+      // Update CH6 S2 stats
+      document.getElementById('ch6s2-div1-count').textContent = data.ch6s2.div1Count;
+      document.getElementById('ch6s2-fncs-placement').textContent = data.ch6s2.fncsPlacement;
+      document.getElementById('ch6s2-best-div1').textContent = data.ch6s2.bestDiv1;
+      updatePlacements('ch6s2-div1-placements', data.ch6s2.div1Placements);
+      updateDropSpot('ch6s2-drop', data.ch6s2.dropSpot, data.ch6s2.dropSpotImg);
+
+      // Update CH6 S3 stats
+      document.getElementById('ch6s3-div1-count').textContent = data.ch6s3.div1Count;
+      document.getElementById('ch6s3-fncs-placement').textContent = data.ch6s3.fncsPlacement;
+      document.getElementById('ch6s3-best-div1').textContent = data.ch6s3.bestDiv1;
+      updatePlacements('ch6s3-div1-placements', data.ch6s3.div1Placements);
+      updateDropSpot('ch6s3-drop', data.ch6s3.dropSpot, data.ch6s3.dropSpotImg);
+
+      // Update CH6 S4 stats
+      document.getElementById('ch6s4-div1-count').textContent = data.ch6s4.div1Count;
+      document.getElementById('ch6s4-avg-placement').textContent = data.ch6s4.avgPlacement;
+      updatePlacements('ch6s4-div1-placements', data.ch6s4.div1Placements);
+      updateDropSpot('ch6s4-drop', data.ch6s4.dropSpot, data.ch6s4.dropSpotImg);
+
+      // Update summary stats
+      document.getElementById('ch6s1-fncs-summary').textContent = data.summary.s1Fncs;
+      document.getElementById('ch6s2-fncs-summary').textContent = data.summary.s2Fncs;
+      document.getElementById('ch6s3-fncs-summary').textContent = data.summary.s3Fncs;
+
+      // Update summary drop spots
+      document.getElementById('summary-s1-name').textContent = data.ch6s1.dropSpot;
+      document.getElementById('summary-s2-name').textContent = data.ch6s2.dropSpot;
+      document.getElementById('summary-s3-name').textContent = data.ch6s3.dropSpot;
+      document.getElementById('summary-s4-name').textContent = data.ch6s4.dropSpot;
+      
+      // Update summary drop spot images
+      const summaryS1Img = document.getElementById('summary-s1-img');
+      const summaryS2Img = document.getElementById('summary-s2-img');
+      const summaryS3Img = document.getElementById('summary-s3-img');
+      const summaryS4Img = document.getElementById('summary-s4-img');
+      
+      if (summaryS1Img && data.ch6s1.dropSpotImg) {
+        summaryS1Img.src = data.ch6s1.dropSpotImg;
+        summaryS1Img.alt = data.ch6s1.dropSpot;
+      }
+      if (summaryS2Img && data.ch6s2.dropSpotImg) {
+        summaryS2Img.src = data.ch6s2.dropSpotImg;
+        summaryS2Img.alt = data.ch6s2.dropSpot;
+      }
+      if (summaryS3Img && data.ch6s3.dropSpotImg) {
+        summaryS3Img.src = data.ch6s3.dropSpotImg;
+        summaryS3Img.alt = data.ch6s3.dropSpot;
+      }
+      if (summaryS4Img && data.ch6s4.dropSpotImg) {
+        summaryS4Img.src = data.ch6s4.dropSpotImg;
+        summaryS4Img.alt = data.ch6s4.dropSpot;
+      }
+    }
+
+    function updatePlacements(elementId, placements) {
+      const container = document.getElementById(elementId);
+      if (container && placements) {
+        container.innerHTML = '';
+        placements.forEach(placement => {
+          const span = document.createElement('span');
+          span.className = 'placement-item';
+          span.textContent = placement;
+          container.appendChild(span);
+        });
+      }
+    }
+
+    function updateDropSpot(elementId, dropSpot, dropSpotImg) {
+      const container = document.getElementById(elementId);
+      if (container && dropSpot) {
+        const nameElement = container.querySelector('.dropspot-name');
+        const imgElement = container.querySelector('.dropspot-image img');
+        
+        if (nameElement) {
+          nameElement.textContent = dropSpot;
+        }
+        
+        if (imgElement && dropSpotImg) {
+          imgElement.src = dropSpotImg;
+          imgElement.alt = dropSpot;
+        }
+      }
+    }
+
+    function loadRandomData() {
+      // Generate random stats for teams not in the dataset
+      const randomDiv1Count = Math.floor(Math.random() * 8) + 2;
+      const randomFncsPlacement = Math.floor(Math.random() * 20) + 1;
+      const randomDiv1Placements = [];
+      
+      for (let i = 0; i < randomDiv1Count; i++) {
+        randomDiv1Placements.push((Math.floor(Math.random() * 30) + 1) + 'th');
+      }
+
+      const pois = ['Tilted Towers', 'Pleasant Park', 'Retail Row', 'Lazy Lake', 'Sweaty Sands', 
+                   'Misty Meadows', 'Holly Hedges', 'Steamy Stacks', 'Craggy Cliffs', 'Catty Corner'];
+      
+      const randomPoi = pois[Math.floor(Math.random() * pois.length)];
+
+      // Update CH6 S1
+      document.getElementById('ch6s1-div1-count').textContent = randomDiv1Count;
+      document.getElementById('ch6s1-fncs-placement').textContent = randomFncsPlacement;
+      document.getElementById('ch6s1-best-div1').textContent = Math.min(...randomDiv1Placements.map(p => parseInt(p)));
+      updatePlacements('ch6s1-div1-placements', randomDiv1Placements);
+      updateDropSpot('ch6s1-drop', randomPoi);
+
+      // Similar random data for other seasons...
+      // Update summary stats with placeholders
+      document.getElementById('ch6s1-fncs-summary').textContent = 'TBD';
+      document.getElementById('ch6s2-fncs-summary').textContent = 'TBD';
+      document.getElementById('ch6s3-fncs-summary').textContent = 'TBD';
+    }
+
+    function showSeasonDetails(season, placement) {
+      alert(`${currentTeam} placed ${placement}${placement === 1 ? 'st' : placement === 2 ? 'nd' : placement === 3 ? 'rd' : 'th'} in ${season}`);
+    }
+
+    // Close popup when pressing Escape
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closePopup();
+      }
+    });
+
+  </script>
+
+</body>
+</html>
