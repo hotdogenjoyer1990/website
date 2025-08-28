@@ -236,35 +236,56 @@
     }
 
     .ps {
-  background-color: #3b5998; /* niebieski PS */
-  background-image: url('pscup.png'); /* opcjonalnie własna grafika */
-  background-size: cover;
-  background-position: center;
-}
+      background-color: #3b5998; /* niebieski PS */
+      background-image: url('pscup.png'); /* opcjonalnie własna grafika */
+      background-size: cover;
+      background-position: center;
+    }
 
-.reload {
-  background-color: #990000;
-  background-image: url('reload.png'); /* opcjonalnie */
-  background-size: cover;
-  background-position: center;
-}
+    .reload {
+      background-color: #990000;
+      background-image: url('reload.png'); /* opcjonalnie */
+      background-size: cover;
+      background-position: center;
+    }
 
-body::-webkit-scrollbar {
-  width: 10px;
-}
+    .duos-trial {
+      background-color: #ff6600;
+      background-image: url('duosdiv1.jpg');
+      background-size: cover;
+      background-position: center;
+    }
 
-body::-webkit-scrollbar-track {
-  background-color: #2c2c2c;
-  border-radius: 8px;
-}
+    .duos-div1 {
+      background-color: #9400d3;
+      background-image: url('duosdiv1.jpg');
+      background-size: cover;
+      background-position: center;
+    }
 
-body::-webkit-scrollbar-thumb {
-  background-color: #ffd700;
-  border-radius: 8px;
-  border: 2px solid #2c2c2c;
-}
+    .solo-cc {
+      background-color: #00ff7f;
+      background-image: url('solocc.png');
+      background-size: cover;
+      background-position: center;
+    }
 
-.footer {
+    body::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    body::-webkit-scrollbar-track {
+      background-color: #2c2c2c;
+      border-radius: 8px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background-color: #ffd700;
+      border-radius: 8px;
+      border: 2px solid #2c2c2c;
+    }
+
+    .footer {
       max-width: 75%;
       margin: 40px auto 20px auto;
       text-align: right;
@@ -285,11 +306,11 @@ body::-webkit-scrollbar-thumb {
     }
 
     .logo-text {
-  font-size: 30px;
-  font-weight: bold;
-  color: #ffffff;
-  font-family: 'Roboto', sans-serif;
-}
+      font-size: 30px;
+      font-weight: bold;
+      color: #ffffff;
+      font-family: 'Roboto', sans-serif;
+    }
   </style>
 </head>
 <body>
@@ -498,12 +519,18 @@ body::-webkit-scrollbar-thumb {
         <div class="day-text-container">Performance Evaluation Cup<br></div>
       </div>
       <div class="empty-box"></div>
-      <div class="empty-box"></div>
+      <div class="day solo-cc">
+        <div class="day-date-top">11.09 - Week 1</div>
+        <div class="day-text-container">Solo Cash Cup<br></div>
+      </div>
       <div class="day reload">
         <div class="day-date-top">12.09 - R6–R10</div>
         <div class="day-text-container">Reload Cup<br></div>
       </div>
-      <div class="empty-box"></div>
+      <div class="day duos-trial">
+        <div class="day-date-top">13.09</div>
+        <div class="day-text-container">Duos Trial<br></div>
+      </div>
     </div>
   
     <!-- Tydzień 3 -->
@@ -517,13 +544,22 @@ body::-webkit-scrollbar-thumb {
         <div class="day-date-top">16.09 - Round 1 & 2</div>
         <div class="day-text-container">Performance Evaluation Cup<br></div>
       </div>
-      <div class="empty-box"></div>
-      <div class="empty-box"></div>
+      <div class="day duos-div1">
+        <div class="day-date-top">17.09 - Day 1</div>
+        <div class="day-text-container">Duos Division 1<br></div>
+      </div>
+      <div class="day duos-div1">
+        <div class="day-date-top">18.09 - Day 2</div>
+        <div class="day-text-container">Duos Division 1<br></div>
+      </div>
       <div class="day reload">
         <div class="day-date-top">19.09 - R11–R15</div>
         <div class="day-text-container">Reload Cup<br></div>
       </div>
-      <div class="empty-box"></div>
+      <div class="day solo-cc duos-div1">
+        <div class="day-date-top">20.09</div>
+        <div class="day-text-container">Solo CC Week 2 / Duos Div1 Finals<br></div>
+      </div>
     </div>
   
     <!-- Tydzień 4 -->
@@ -537,13 +573,22 @@ body::-webkit-scrollbar-thumb {
         <div class="day-date-top">23.09 - Round 1 & 2</div>
         <div class="day-text-container">Performance Evaluation Cup<br></div>
       </div>
-      <div class="empty-box"></div>
-      <div class="empty-box"></div>
+      <div class="day duos-div1">
+        <div class="day-date-top">24.09 - Day 1</div>
+        <div class="day-text-container">Duos Division 1<br></div>
+      </div>
+      <div class="day duos-div1">
+        <div class="day-date-top">25.09 - Day 2</div>
+        <div class="day-text-container">Duos Division 1<br></div>
+      </div>
       <div class="day reload">
         <div class="day-date-top">26.09 - R16–R20</div>
         <div class="day-text-container">Reload Cup<br></div>
       </div>
-      <div class="empty-box"></div>
+      <div class="day solo-cc duos-div1">
+        <div class="day-date-top">27.09</div>
+        <div class="day-text-container">Solo CC Week 3 / Duos Div1 Finals<br></div>
+      </div>
     </div>
   
     <!-- Tydzień 5 -->
@@ -571,14 +616,23 @@ body::-webkit-scrollbar-thumb {
     <!-- Tydzień 1 -->
     <div class="week">
       <div class="empty-box"></div>
-      <div class="empty-box"></div>
-      <div class="empty-box"></div> <!-- 01 śr -->
-      <div class="empty-box"></div> <!-- 02 czw -->
-      <div class="day reload">
-        <div class="day-date-top">03.10 - R21–R25</div>
-        <div class="day-text-container">Reload Cup</div>
+      <div class="day duos-div1">
+        <div class="day-date-top">01.10 - Day 1</div>
+        <div class="day-text-container">Duos Division 1</div>
       </div>
-      <div class="empty-box"></div> <!-- 04 sob -->
+      <div class="day duos-div1">
+        <div class="day-date-top">02.10 - Day 2</div>
+        <div class="day-text-container">Duos Division 1</div>
+      </div>
+      <div class="empty-box"></div>
+      <div class="day reload duos-div1">
+        <div class="day-date-top">03.10</div>
+        <div class="day-text-container">Reload R21–R25 / Duos Div1 Finals</div>
+      </div>
+      <div class="day solo-cc">
+        <div class="day-date-top">04.10 - Week 4</div>
+        <div class="day-text-container">Solo Cash Cup</div>
+      </div>
       <div class="day console">
         <div class="day-date-top">05.10 - Round 1</div>
         <div class="day-text-container">Console Victory Cash Cup</div>
@@ -587,18 +641,27 @@ body::-webkit-scrollbar-thumb {
   
     <!-- Tydzień 2 -->
     <div class="week">
-      <div class="empty-box"></div> <!-- 06 -->
+      <div class="empty-box"></div>
       <div class="day eval">
         <div class="day-date-top">07.10 - R1 & R2</div>
         <div class="day-text-container">Performance Evaluation Cup</div>
       </div>
-      <div class="empty-box"></div> <!-- 08 -->
-      <div class="empty-box"></div> <!-- 09 -->
+      <div class="day duos-div1">
+        <div class="day-date-top">08.10 - Day 1</div>
+        <div class="day-text-container">Duos Division 1</div>
+      </div>
+      <div class="day duos-div1">
+        <div class="day-date-top">09.10 - Day 2</div>
+        <div class="day-text-container">Duos Division 1</div>
+      </div>
       <div class="day reload">
         <div class="day-date-top">10.10 - R26–R30</div>
         <div class="day-text-container">Reload Cup</div>
       </div>
-      <div class="empty-box"></div> <!-- 11 -->
+      <div class="day solo-cc duos-div1">
+        <div class="day-date-top">11.10</div>
+        <div class="day-text-container">Solo CC Week 5 / Duos Div1 Finals</div>
+      </div>
       <div class="day console">
         <div class="day-date-top">12.10 - Round 2</div>
         <div class="day-text-container">Console Victory Cash Cup</div>
@@ -607,18 +670,27 @@ body::-webkit-scrollbar-thumb {
   
     <!-- Tydzień 3 -->
     <div class="week">
-      <div class="empty-box"></div> <!-- 13 -->
+      <div class="empty-box"></div>
       <div class="day eval">
         <div class="day-date-top">14.10 - R1 & R2</div>
         <div class="day-text-container">Performance Evaluation Cup</div>
       </div>
-      <div class="empty-box"></div> <!-- 15 -->
-      <div class="empty-box"></div> <!-- 16 -->
+      <div class="day duos-div1">
+        <div class="day-date-top">15.10 - Day 1</div>
+        <div class="day-text-container">Duos Division 1</div>
+      </div>
+      <div class="day duos-div1">
+        <div class="day-date-top">16.10 - Day 2</div>
+        <div class="day-text-container">Duos Division 1</div>
+      </div>
       <div class="day reload">
         <div class="day-date-top">17.10 - R31–R35</div>
         <div class="day-text-container">Reload Cup</div>
       </div>
-      <div class="empty-box"></div> <!-- 18 -->
+      <div class="day solo-cc duos-div1">
+        <div class="day-date-top">18.10</div>
+        <div class="day-text-container">Solo CC Week 6 / Duos Div1 Finals</div>
+      </div>
       <div class="day console">
         <div class="day-date-top">19.10 - Round 1</div>
         <div class="day-text-container">Console Victory Cash Cup</div>
@@ -627,18 +699,27 @@ body::-webkit-scrollbar-thumb {
   
     <!-- Tydzień 4 -->
     <div class="week">
-      <div class="empty-box"></div> <!-- 20 -->
+      <div class="empty-box"></div>
       <div class="day eval">
         <div class="day-date-top">21.10 - R1 & R2</div>
         <div class="day-text-container">Performance Evaluation Cup</div>
       </div>
-      <div class="empty-box"></div> <!-- 22 -->
-      <div class="empty-box"></div> <!-- 23 -->
+      <div class="day duos-div1">
+        <div class="day-date-top">22.10 - Day 1</div>
+        <div class="day-text-container">Duos Division 1</div>
+      </div>
+      <div class="day duos-div1">
+        <div class="day-date-top">23.10 - Day 2</div>
+        <div class="day-text-container">Duos Division 1</div>
+      </div>
       <div class="day reload">
         <div class="day-date-top">24.10 - R36–R40</div>
         <div class="day-text-container">Reload Cup</div>
       </div>
-      <div class="empty-box"></div> <!-- 25 -->
+      <div class="day solo-cc duos-div1">
+        <div class="day-date-top">25.10</div>
+        <div class="day-text-container">Solo CC Finals / Duos Div1 Finals</div>
+      </div>
       <div class="day console">
         <div class="day-date-top">26.10 - Round 2</div>
         <div class="day-text-container">Console Victory Cash Cup</div>
@@ -647,11 +728,11 @@ body::-webkit-scrollbar-thumb {
   
     <!-- Tydzień 5 -->
     <div class="week">
-      <div class="empty-box"></div> <!-- 27 -->
-      <div class="empty-box"></div> <!-- 28 -->
-      <div class="empty-box"></div> <!-- 29 -->
-      <div class="empty-box"></div> <!-- 30 -->
-      <div class="empty-box"></div> <!-- 31 -->
+      <div class="empty-box"></div>
+      <div class="empty-box"></div>
+      <div class="empty-box"></div>
+      <div class="empty-box"></div>
+      <div class="empty-box"></div>
       <div class="empty-box"></div>
       <div class="empty-box"></div>
     </div>

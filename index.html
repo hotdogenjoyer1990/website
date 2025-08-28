@@ -5,21 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EUCompetitive</title>
 
-  <!-- Czcionka Roboto -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
-
-  <!-- Favicon -->
   <link rel="icon" href="logo.png" type="image/png" />
-
-  <!-- Font Awesome (ikony społecznościowe) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       background-color: #131313;
@@ -37,9 +28,13 @@
       padding: 0 20px;
     }
 
-    .navbar img {
-      height: 50px;
-      z-index: 2;
+    .navbar img { height: 70px; z-index: 2; }
+
+    .logo-text {
+      font-size: 30px;
+      font-weight: bold;
+      color: #ffffff;
+      margin-left: 10px;
     }
 
     .nav-buttons {
@@ -63,10 +58,7 @@
       transition: transform 0.2s, opacity 0.2s;
     }
 
-    .nav-button:hover {
-      opacity: 0.9;
-      transform: scale(1.03);
-    }
+    .nav-button:hover { opacity: 0.9; transform: scale(1.03); }
 
     .social-icons {
       margin-left: auto;
@@ -80,21 +72,11 @@
       transition: transform 0.2s ease, opacity 0.2s;
     }
 
-    .social-link:hover {
-      transform: scale(1.2);
-      opacity: 0.9;
-    }
+    .social-link:hover { transform: scale(1.2); opacity: 0.9; }
 
-    .main-content {
-      text-align: center;
-      padding: 80px 20px;
-    }
+    .main-content { text-align: center; padding: 80px 20px; }
 
-    .main-content h1 {
-      font-size: 50px;
-      margin-bottom: 20px;
-      color: #ffd700;
-    }
+    .main-content h1 { font-size: 50px; margin-bottom: 20px; color: #ffd700; }
 
     .main-content p {
       font-size: 18px;
@@ -103,10 +85,10 @@
       line-height: 1.6;
     }
 
-    /* KARUZELA - SLIDER OBRAZKÓW */
+    /* SLIDER */
     .image-slider {
-      max-width: 1100px; /* trochę szersze niż tekst */
-      margin: 30px auto 0 auto;
+      max-width: 1100px;
+      margin: 10px auto 0 auto;
       padding: 10px;
       border: 3px solid #ffd700;
       border-radius: 10px;
@@ -117,63 +99,35 @@
 
     .slides {
       display: flex;
-      width: 600%; /* 6 obrazków (3 + 3 powielone) */
-      animation: slideAnimation 60s linear infinite;
+      width: 1200%; /* 12 obrazków */
+      animation: slideAnimation 90s linear infinite;
     }
 
     .slides img {
-      width: 16.6667%; /* 100% / 6 obrazków */
+      width: 8.3333%; /* 100% / 12 */
       height: 500px;
       object-fit: cover;
       border-radius: 6px;
       margin-right: 10px;
     }
 
-    /* Usuwamy margines przy ostatnim obrazku, żeby się nie "przesuwał" */
-    .slides img:last-child {
-      margin-right: 0;
-    }
+    .slides img:last-child { margin-right: 0; }
 
     @keyframes slideAnimation {
       0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); } /* przesuwamy o połowę szerokości */
+      100% { transform: translateX(-50%); } /* przewija połowę, więc 6 obrazków */
     }
 
     @media (max-width: 1024px) {
-      .image-slider {
-        max-width: 90%;
-      }
+      .image-slider { max-width: 90%; }
     }
 
     @media (max-width: 600px) {
-      .navbar {
-        flex-direction: column;
-        align-items: center;
-        height: auto;
-        padding: 10px;
-      }
-
-      .navbar img {
-        margin-bottom: 10px;
-      }
-
-      .nav-buttons {
-        position: static;
-        transform: none;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-top: 10px;
-      }
-
-      .social-icons {
-        justify-content: center;
-        margin-top: 10px;
-      }
-      
-      /* Na mniejsze ekrany zmniejszamy też wysokość obrazków */
-      .slides img {
-        height: 250px;
-      }
+      .navbar { flex-direction: column; align-items: center; height: auto; padding: 10px; }
+      .navbar img { margin-bottom: 10px; }
+      .nav-buttons { position: static; transform: none; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+      .social-icons { justify-content: center; margin-top: 10px; }
+      .slides img { height: 250px; }
     }
 
     /* STOPKA */
@@ -191,19 +145,6 @@
       border-top: 1px solid rgba(255, 255, 255, 0.2);
       margin-bottom: 10px;
     }
-
-    .navbar img {
-      height: 70px;
-      z-index: 2;
-    }
-
-
-.logo-text {
-  font-size: 30px;
-  font-weight: bold;
-  color: #ffffff;
-  font-family: 'Roboto', sans-serif;
-}
   </style>
 </head>
 <body>
@@ -230,33 +171,29 @@
 
   <div class="main-content">
     <h1>Welcome to EUCompetitive</h1>
+    <p>Track how competitive Fortnite has evolved over the years and get the full picture of its esports history.</p>
+    <p>Explore every Fortnite tournament map – from the 2019 World Cup to the FNCS Global Championship 2025!</p>
+    <p>Browse a complete collection of maps from all major events along with detailed tournament standings.</p>
+  </div>
 
-    <p>Explore every major Fortnite tournament map - from FNCS to World Cup!
-      Dive into the epic maps of FNCS, Duo Cash Cup Finals, Elite Cup Finals, World Cup, and other top competitive events. See how Fortnite's 
-      tournament maps have evolved season by season and get the full picture of competitive Fortnite history.</p>
-
-    <div class="image-slider">
-      <div class="slides">
-        <img src="obraztest4.png" alt="Map 1" />
-        <img src="obraztest5.png" alt="Map 2" />
-        <img src="obraztest6.png" alt="Map 3" />
-        <!-- Powielone obrazki do płynnego nieskończonego przewijania -->
-        <img src="obraztest4.png" alt="Map 1" />
-        <img src="obraztest5.png" alt="Map 2" />
-        <img src="obraztest6.png" alt="Map 3" />
-
-                <img src="obraztest4.png" alt="Map 4" />
-                <img src="obraztest7.png" alt="Map 5" />
-                <img src="obraztest8.png" alt="Map 6" />
-                        <!-- Powielone obrazki do płynnego nieskończonego przewijania -->
-        <img src="obraztest4.png" alt="Map 4" />
-        <img src="obraztest7.png" alt="Map 5" />
-        <img src="obraztest8.png" alt="Map 6" />
-      </div>
+  <div class="image-slider">
+    <div class="slides">
+      <img src="obraz43.png" alt="Obraz 43" />
+      <img src="obraz42.png" alt="Obraz 42" />
+      <img src="obraz41.png" alt="Obraz 41" />
+      <img src="obraz40.png" alt="Obraz 40" />
+      <img src="obraz39.png" alt="Obraz 39" />
+      <img src="obraz38.png" alt="Obraz 38" />
+      <img src="obraz37.png" alt="Obraz 37" />
+      <img src="obraz36.png" alt="Obraz 36" />
+      <img src="obraz35.png" alt="Obraz 35" />
+      <img src="obraz34.png" alt="Obraz 34" />
+      <img src="obraz33.png" alt="Obraz 33" />
+      <img src="obraz32.png" alt="Obraz 32" />
+      <img src="obraz31.png" alt="Obraz 31" />
     </div>
   </div>
 
-  <!-- STOPKA -->
   <footer class="footer">
     <hr class="footer-line" />
     <p>
