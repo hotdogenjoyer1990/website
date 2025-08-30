@@ -13,6 +13,7 @@
 
   <!-- Favicon -->
   <link rel="icon" href="logo.png" type="image/png" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <style>
 * {
@@ -89,7 +90,7 @@ body {
 
 /* Style dla widoku chapters */
 .container {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 30px 20px;
 }
@@ -154,7 +155,7 @@ h1 {
   background: #333;
   border: 2px solid #ffd700;
   border-radius: 12px;
-  min-height: 200px;
+  min-height: 280px;
   font-size: 16px;
   color: white;
   cursor: pointer;
@@ -498,7 +499,7 @@ td.team-cell {
 
 .footer {
   max-width: 75%;
-  margin: 180px auto 20px auto;
+  margin: 60px auto 10px auto;
   text-align: right;
   color: #aaaaaa;
   font-size: 12px;
@@ -708,7 +709,7 @@ td.team-cell {
 <!-- Chapters View -->
 <div id="chapters-view">
   <div class="container">
-    <h1 id="main-title">TOURNAMENT MAPS</h1>
+    <h1 id="main-title"></h1>
 
     <!-- Back Button (Only visible when not on main page) -->
     <button class="back-button" id="back-button" style="display: none;" onclick="goBack()">
@@ -1187,33 +1188,36 @@ const chaptersData = {
 name: 'Season 2',
 description: 'Lawless',
 image: 'Chapter6S2.png',
-excelFile: 'CH6S2.xlsx',
+excelFile: 'CH6S2TournamentData.xlsx',
 tournaments: [
-// Performance Cups
-{ id: 'performance_w1', name: 'PERFORMANCE CUP WEEK 1', key: 'PerfCupCH6S2W1', image: 'PerfCupCH6S2W1.png' },
-{ id: 'performance_w2', name: 'PERFORMANCE CUP WEEK 2', key: 'PerfCupCH6S2W2', image: 'PerfCupCH6S2W2.png' },
-{ id: 'performance_w3', name: 'PERFORMANCE CUP WEEK 3', key: 'PerfCupCH6S2W3', image: 'PerfCupCH6S2W3.png' },
-{ id: 'performance_w4', name: 'PERFORMANCE CUP WEEK 4', key: 'PerfCupCH6S2W4', image: 'PerfCupCH6S2W4.png' },
-{ id: 'performance_w5', name: 'PERFORMANCE CUP WEEK 5', key: 'PerfCupCH6S2W5', image: 'PerfCupCH6S2W5.png' },
-{ id: 'performance_w6', name: 'PERFORMANCE CUP WEEK 6', key: 'PerfCupCH6S2W6', image: 'PerfCupCH6S2W6.png' },
-{ id: 'performance_w7', name: 'PERFORMANCE CUP WEEK 7', key: 'PerfCupCH6S2W7', image: 'PerfCupCH6S2W7.png' },
-{ id: 'performance_w8', name: 'PERFORMANCE CUP WEEK 8', key: 'PerfCupCH6S2W8', image: 'PerfCupCH6S2W8.png' },
-{ id: 'performance_w9', name: 'PERFORMANCE CUP WEEK 9', key: 'PerfCupCH6S2W9', image: 'PerfCupCH6S2W9.png' },
+  // Performance Cups
+  { id: 'performance_w1', name: 'PERFORMANCE CUP WEEK 1', key: 'PerfCupCH6S2W1', sheet: 'Performance Cup W1', image: 'PerfCupCH6S2W1.png' },
+  { id: 'performance_w2', name: 'PERFORMANCE CUP WEEK 2', key: 'PerfCupCH6S2W2', sheet: 'Performance Cup W2', image: 'PerfCupCH6S2W2.png' },
+  { id: 'performance_w3', name: 'PERFORMANCE CUP WEEK 3', key: 'PerfCupCH6S2W3', sheet: 'Performance Cup W3', image: 'PerfCupCH6S2W3.png' },
+  { id: 'performance_w4', name: 'PERFORMANCE CUP WEEK 4', key: 'PerfCupCH6S2W4', sheet: 'Performance Cup W4', image: 'PerfCupCH6S2W4.png' },
+  { id: 'performance_w5', name: 'PERFORMANCE CUP WEEK 5', key: 'PerfCupCH6S2W5', sheet: 'Performance Cup W5', image: 'PerfCupCH6S2W5.png' },
+  { id: 'performance_w6', name: 'PERFORMANCE CUP WEEK 6', key: 'PerfCupCH6S2W6', sheet: 'Performance Cup W6', image: 'PerfCupCH6S2W6.png' },
+  { id: 'performance_w7', name: 'PERFORMANCE CUP WEEK 7', key: 'PerfCupCH6S2W7', sheet: 'Performance Cup W7', image: 'PerfCupCH6S2W7.png' },
+  { id: 'performance_w8', name: 'PERFORMANCE CUP WEEK 8', key: 'PerfCupCH6S2W8', sheet: 'Performance Cup W8', image: 'PerfCupCH6S2W8.png' },
+  { id: 'performance_w9', name: 'PERFORMANCE CUP WEEK 9', key: 'PerfCupCH6S2W9', sheet: 'Performance Cup W9', image: 'PerfCupCH6S2W9.png' },
 
-// Division 1 Cups
-{ id: 'division1_w1', name: 'DIVISION 1 CUP WEEK 1', key: 'Division1CH6S2W1', image: 'Division1CH6S2W1.png' },
-{ id: 'division1_w2', name: 'DIVISION 1 CUP WEEK 2', key: 'Division1CH6S2W2', image: 'Division1CH6S2W2.png' },
-{ id: 'division1_w3', name: 'DIVISION 1 CUP WEEK 3', key: 'Division1CH6S2W3', image: 'Division1CH6S2W3.png' },
-{ id: 'division1_w4', name: 'DIVISION 1 CUP WEEK 4', key: 'Division1CH6S2W4', image: 'Division1CH6S2W4.png' },
-{ id: 'division1_w5', name: 'DIVISION 1 CUP WEEK 5', key: 'Division1CH6S2W5', image: 'Division1CH6S2W5.png' },
+  // Division 1 Cups
+  { id: 'division1_w1', name: 'DIVISION 1 CUP WEEK 1', key: 'Division1CH6S2W1', sheet: 'Division 1 W1', image: 'Division1CH6S2W1.png' },
+  { id: 'division1_w2', name: 'DIVISION 1 CUP WEEK 2', key: 'Division1CH6S2W2', sheet: 'Division 1 W2', image: 'Division1CH6S2W2.png' },
+  { id: 'division1_w3', name: 'DIVISION 1 CUP WEEK 3', key: 'Division1CH6S2W3', sheet: 'Division 1 W3', image: 'Division1CH6S2W3.png' },
+  { id: 'division1_w4', name: 'DIVISION 1 CUP WEEK 4', key: 'Division1CH6S2W4', sheet: 'Division 1 W4', image: 'Division1CH6S2W4.png' },
+  { id: 'division1_w5', name: 'DIVISION 1 CUP WEEK 5', key: 'Division1CH6S2W5', sheet: 'Division 1 W5', image: 'Division1CH6S2W5.png' },
 
-// FNCS
-{ id: 'fncs_g1', name: 'FNCS GROUP 1', key: 'FNCSGroup1CH6S2', image: 'FNCSGroup1CH6S2.png' },
-{ id: 'fncs_g2', name: 'FNCS GROUP 2', key: 'FNCSGroup2CH6S2', image: 'FNCSGroup2CH6S2.png' },
-{ id: 'fncs_g3', name: 'FNCS GROUP 3', key: 'FNCSGroup3CH6S2', image: 'FNCSGroup3CH6S2.png' },
-{ id: 'fncs_lcl', name: 'FNCS LAST CHANCE LOBBY', key: 'FNCSSLCCH6S2', image: 'FNCSSLCCH6S2.png' },
-{ id: 'fncs_final', name: 'FNCS GRAND FINALS', key: 'FNCSGrandFinalsCH6S2', image: 'FNCSGrandFinalsCH6S2.png' }
+
+  // FNCS
+  { id: 'fncs_g1', name: 'FNCS GROUP 1', key: 'FNCSGroup1CH6S2', sheet: 'FNCS Group 1', image: 'FNCSGroup1CH6S2.png' },
+  { id: 'fncs_g2', name: 'FNCS GROUP 2', key: 'FNCSGroup2CH6S2', sheet: 'FNCS Group 2', image: 'FNCSGroup2CH6S2.png' },
+  { id: 'fncs_g3', name: 'FNCS GROUP 3', key: 'FNCSGroup3CH6S2', sheet: 'FNCS Group 3', image: 'FNCSGroup3CH6S2.png' },
+  { id: 'fncs_lcl', name: 'FNCS LAST CHANCE LOBBY', key: 'FNCSSLCCH6S2', sheet: 'FNCS LCL', image: 'FNCSSLCCH6S2.png' },
+  { id: 'fncs_final', name: 'FNCS GRAND FINALS', key: 'FNCSGrandFinalsCH6S2', sheet: 'FNCS Grand Finals', image: 'CH6S2GRANDS.png' }
 ]
+
+
       },
       { 
         id: 'SMS1', 
@@ -1221,19 +1225,45 @@ tournaments: [
         description: 'Galactic Battle', 
         image: 'Chapter6SMS1.png',
         tournaments: [
-          { id: 'mini_fncs', name: 'Mini FNCS Finals', description: 'Skrócony turniej FNCS', key: 'ch6_sms1_mini_fncs' },
-          { id: 'special_cup', name: 'Special Mini Cup', description: 'Specjalny mini turniej', key: 'ch6_sms1_special_cup' }
+        { id: 'performance_w1', name: 'PERFORMANCE CUP WEEK 1', key: 'PerfCupCH6S3W1', sheet: 'Performance Cup W1', image: 'PerfCupCH6SMS1W1.png' },
+{ id: 'performance_w2', name: 'PERFORMANCE CUP WEEK 2', key: 'PerfCupCH6S3W2', sheet: 'Performance Cup W2', image: 'PerfCupCH6SMS1W2.png' },
+{ id: 'performance_w3', name: 'PERFORMANCE CUP WEEK 3', key: 'PerfCupCH6S3W3', sheet: 'Performance Cup W3', image: 'PerfCupCH6SMS1W3.png' },
+{ id: 'performance_w4', name: 'PERFORMANCE CUP WEEK 4', key: 'PerfCupCH6S3W4', sheet: 'Performance Cup W4', image: 'PerfCupCH6SMS1W4.png' },
+
+
+// Division 1 Cups
+{ id: 'division1_w1', name: 'FNCS SHOWDOWN WEEK 1', key: 'Division1CH6S3W1', sheet: 'Division 1 W1', image: 'SHOWDOWNCH6SMS1W1.png' },
+{ id: 'division1_w2', name: 'FNCS SHOWDOWN WEEK 2', key: 'Division1CH6S3W2', sheet: 'Division 1 W2', image: 'SHOWDOWNCH6SMS1W2.png' },
+{ id: 'division1_w2', name: 'FNCS SHOWDOWN WEEK 3', key: 'Division1CH6S3W2', sheet: 'Division 1 W2', image: 'SHOWDOWNCH6SMS1W3.png' },
+
         ]
       },
       { 
         id: 'S3', 
-        name: 'Season 3', 
-        description: 'Super', 
-        image: 'Chapter6S3.png',
-        tournaments: [
-          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch6_s3_fncs' },
-          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch6_s3_cash_cup' },
-          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch6_s3_performance' }
+  name: 'Season 3', 
+  description: 'Super', 
+  image: 'Chapter6S3.png',
+  excelFile: 'CH6S3TournamentData.xlsx',
+  tournaments: [
+    // Performance Cups
+    { id: 'performance_w1', name: 'PERFORMANCE CUP WEEK 1', key: 'PerfCupCH6S3W1', sheet: 'Performance Cup W1', image: 'PerfCupCH6S3W1.png' },
+{ id: 'performance_w2', name: 'PERFORMANCE CUP WEEK 2', key: 'PerfCupCH6S3W2', sheet: 'Performance Cup W2', image: 'PerfCupCH6S3W2.png' },
+{ id: 'performance_w3', name: 'PERFORMANCE CUP WEEK 3', key: 'PerfCupCH6S3W3', sheet: 'Performance Cup W3', image: 'PerfCupCH6S3W3.png' },
+{ id: 'performance_w4', name: 'PERFORMANCE CUP WEEK 4', key: 'PerfCupCH6S3W4', sheet: 'Performance Cup W4', image: 'PerfCupCH6S3W4.png' },
+{ id: 'performance_w5', name: 'PERFORMANCE CUP WEEK 5', key: 'PerfCupCH6S3W5', sheet: 'Performance Cup W5', image: 'PerfCupCH6S3W5.png' },
+{ id: 'performance_w6', name: 'PERFORMANCE CUP WEEK 6', key: 'PerfCupCH6S3W6', sheet: 'Performance Cup W6', image: 'PerfCupCH6S3W6.png' },
+
+// Division 1 Cups
+{ id: 'division1_w1', name: 'DIVISION 1 FINALS WEEK 1', key: 'Division1CH6S3W1', sheet: 'Division 1 W1', image: 'Division1CH6S3W1.png' },
+{ id: 'division1_w2', name: 'DIVISION 1 FINALS WEEK 2', key: 'Division1CH6S3W2', sheet: 'Division 1 W2', image: 'Division1CH6S3W2.png' },
+
+// FNCS
+{ id: 'fncs_g1', name: 'FNCS GROUP 1', key: 'FNCSGroup1CH6S3', sheet: 'FNCS Group 1', image: 'FNCSGroup1CH6S3.png' },
+{ id: 'fncs_g2', name: 'FNCS GROUP 2', key: 'FNCSGroup2CH6S3', sheet: 'FNCS Group 2', image: 'FNCSGroup2CH6S3.png' },
+{ id: 'fncs_g3', name: 'FNCS GROUP 3', key: 'FNCSGroup3CH6S3', sheet: 'FNCS Group 3', image: 'FNCSGroup3CH6S3.png' },
+{ id: 'fncs_lcl', name: 'FNCS LCL', key: 'FNCSSLCCH6S3', sheet: 'FNCS LCL', image: 'FNCSSLCCH6S3.png' },
+{ id: 'fncs_final', name: 'FNCS GRAND FINALS', key: 'FNCSGrandFinalsCH6S3', sheet: 'FNCS Grand Finals', image: 'CH6S3GRANDS.png' }
+
         ]
       },
       { 
@@ -1241,10 +1271,22 @@ tournaments: [
         name: 'Season 4', 
         description: 'Shock N Awesome', 
         image: 'Chapter6S4.png',
+        excelFile: 'CH6S4TournamentData.xlsx',
         tournaments: [
-          { id: 'fncs', name: 'FNCS Grand Finals', description: 'Główny turniej FNCS', key: 'ch6_s4_fncs' },
-          { id: 'cash_cup', name: 'Duo Cash Cup Finals', description: 'Finał Cash Cup w duos', key: 'ch6_s4_cash_cup' },
-          { id: 'performance', name: 'Performance Evaluation Cup', description: 'Turniej oceny wydajności', key: 'ch6_s4_performance' }
+    // Performance Cups
+    { id: 'performance_w1', name: 'PERFORMANCE CUP WEEK 1', key: 'PerfCupCH6S4W1', sheet: 'Performance Cup W1', image: 'PerfCupCH6S4W1.png' },
+{ id: 'performance_w2', name: 'PERFORMANCE CUP WEEK 2', key: 'PerfCupCH6S4W2', sheet: 'Performance Cup W2', image: 'PerfCupCH6S4W2.png' },
+{ id: 'performance_w3', name: 'PERFORMANCE CUP WEEK 3', key: 'PerfCupCH6S4W3', sheet: 'Performance Cup W3', image: 'PerfCupCH6S4W3.png' },
+{ id: 'performance_w4', name: 'PERFORMANCE CUP WEEK 4', key: 'PerfCupCH6S4W4', sheet: 'Performance Cup W4', image: 'PerfCupCH6S4W4.png' },
+
+
+// Division 1 Cups
+{ id: 'division1_w1', name: 'DIVISION 1 PRACTICE FINALS WEEK 1', key: 'Division1CH6S4W1', sheet: 'Division 1 W1', image: 'Division1CH6S4W1.png' },
+{ id: 'division1_w2', name: 'DIVISION 1 PRACTICE FINALS WEEK 2', key: 'Division1CH6S4W2', sheet: 'Division 1 W2', image: 'Division1CH6S4W2.png' },
+{ id: 'division1_w3', name: 'DIVISION 1 PRACTICE FINALS WEEK 3', key: 'Division1CH6S4W3', sheet: 'Division 1 W3', image: 'Division1CH6S4W3.png' },
+
+
+
         ]
       }
     ]
@@ -1321,30 +1363,22 @@ function showTournaments(chapterNum, seasonId) {
         const tournamentBtn = document.createElement('button');
         tournamentBtn.textContent = `${tournament.name} - ${edition}`;
         const tournamentKey = tournament.keys ? tournament.keys[index] : `${tournament.key}_${edition.toLowerCase().replace(' ', '_')}`;
-        tournamentBtn.onclick = () => showTournamentDetails(tournamentKey, `${tournament.name} - ${edition}`);
-        sidebar.appendChild(tournamentBtn);
+        tournamentBtn.onclick = () => showTournamentDetails(tournamentKey, `${tournament.name} - ${edition}`, null);        sidebar.appendChild(tournamentBtn);
       });
     } else {
       // Turniej bez edycji (FNCS)
       const tournamentBtn = document.createElement('button');
       tournamentBtn.textContent = tournament.name;
-      tournamentBtn.onclick = () => showTournamentDetails(tournament.key, tournament.name);
-      sidebar.appendChild(tournamentBtn);
+      tournamentBtn.onclick = () => showTournamentDetails(tournament.key, tournament.name, tournament);      sidebar.appendChild(tournamentBtn);
     }
   });
   
-  // Wyczyść content area
-  document.getElementById('tournament-content-area').innerHTML = `
-    <div style="text-align: center; padding: 50px; color: #888;">
-      <h2>Wybierz turniej z menu po lewej stronie</h2>
-      <p>Kliknij na jeden z turniejów, aby zobaczyć szczegóły i wyniki.</p>
-    </div>
-  `;
+
   
   document.getElementById('tournament-right-image').innerHTML = '';
 }
 
-function showTournamentDetails(tournamentKey, tournamentName) {
+function showTournamentDetails(tournamentKey, tournamentName, tournamentData = null) {
   const contentArea = document.getElementById('tournament-content-area');
   const rightImage = document.getElementById('tournament-right-image');
   
@@ -1356,40 +1390,79 @@ function showTournamentDetails(tournamentKey, tournamentName) {
   // Dodaj active class do klikniętego przycisku
   event.target.classList.add('active');
   
-  // Przykładowa tabela wyników (można później zintegrować z prawdziwymi danymi)
-  const sampleData = [
-    ['Miejsce', 'Drużyna/Gracz', 'Punkty'],
-    ['1', 'Aqua & Nyhrox', '25'],
-    ['2', 'Bugha', '23'],
-    ['3', 'Tfue & Cloak', '21'],
-    ['4', 'Mongraal & Mitr0', '19'],
-    ['5', 'Benjyfishy & MrSavage', '17']
-  ];
+  // Sprawdź czy sezon ma plik Excel i turniej ma arkusz
+  const chapter = chaptersData[currentChapter];
+  const season = chapter.seasons.find(s => s.id === currentSeason);
   
-  // Buduj tabelę HTML
-  let tableHTML = '<table>';
-  
-  for (let i = 0; i < sampleData.length; i++) {
-    const row = sampleData[i];
+  if (season && season.excelFile && tournamentData && tournamentData.sheet) {
+    // Załaduj dane z Excel
+    loadExcelData(season.excelFile, tournamentData.sheet, contentArea);
+  } else {
+    // Użyj przykładowych danych
+    const sampleData = [
+    ['#', 'Team', 'Prize Pool'],
+    ['1', '-', '-'],
+    ['2', '-', '-'],
+    ['3', '-', '-'],
+    ['4', '-', '-'],
+    ['5', '-', '-'],
+    ['6', '-', '-'],
+    ['7', '-', '-'],
+    ['8', '-', '-'],
+    ['9', '-', '-'],
+    ['10', '-', '-'],
+    ['11', '-', '-'],
+    ['12', '-', '-'],
+    ['13', '-', '-'],
+    ['14', '-', '-'],
+    ['15', '-', '-'],
+    ['16', '-', '-'],
+    ['17', '-', '-'],
+    ['18', '-', '-'],
+    ['19', '-', '-'],
+    ['20', '-', '-'],
+    ['21', '-', '-'],
+    ['22', '-', '-'],
+    ['23', '-', '-'],
+    ['24', '-', '-'],
+    ['25', '-', '-'],
+    ['26', '-', '-'],
+    ['27', '-', '-'],
+    ['28', '-', '-'],
+    ['29', '-', '-'],
+    ['30', '-', '-'],
+    ['31', '-', '-'],
+    ['32', '-', '-'],
+    ['33', '-', '-']
+    ];
     
-    tableHTML += '<tr>';
-    for (let j = 0; j < row.length; j++) {
-      const cell = row[j] || '';
-      if (i === 0) {
-        tableHTML += `<th${j === 1 ? ' class="team-cell"' : ''}>${cell}</th>`;
-      } else {
-        tableHTML += `<td${j === 1 ? ' class="team-cell"' : ''}>${cell}</td>`;
+    // Buduj tabelę HTML
+    let tableHTML = '<table>';
+    for (let i = 0; i < sampleData.length; i++) {
+      const row = sampleData[i];
+      tableHTML += '<tr>';
+      for (let j = 0; j < row.length; j++) {
+        const cell = row[j] || '';
+        if (i === 0) {
+          tableHTML += `<th${j === 1 ? ' class="team-cell"' : ''}>${cell}</th>`;
+        } else {
+          tableHTML += `<td${j === 1 ? ' class="team-cell"' : ''}>${cell}</td>`;
+        }
       }
+      tableHTML += '</tr>';
     }
-    tableHTML += '</tr>';
+    tableHTML += '</table>';
+    contentArea.innerHTML = tableHTML;
+    contentArea.classList.add('has-content');
   }
-  tableHTML += '</table>';
-
-  contentArea.innerHTML = tableHTML;
-  contentArea.classList.add('has-content');
   
   // Pokaż odpowiedni obraz
-  const imageName = tournamentImages[tournamentKey] || 'mapplaceholder.png';
+  let imageName = 'mapplaceholder.png';
+  if (tournamentData && tournamentData.image) {
+    imageName = tournamentData.image;
+  } else if (tournamentImages[tournamentKey]) {
+    imageName = tournamentImages[tournamentKey];
+  }
   
   if (imageName === 'mapplaceholder.png') {
     rightImage.innerHTML = `
@@ -1401,6 +1474,40 @@ function showTournamentDetails(tournamentKey, tournamentName) {
   } else {
     rightImage.innerHTML = `<img src="${imageName}" alt="Mapa turnieju" />`;
   }
+}
+
+function loadExcelData(fileName, sheetName, contentArea) {
+  fetch(fileName)
+    .then(response => response.arrayBuffer())
+    .then(data => {
+      const workbook = XLSX.read(data, { type: 'array' });
+      const worksheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+      
+      // Buduj tabelę z danych Excel
+      let tableHTML = '<table>';
+      for (let i = 0; i < jsonData.length; i++) {
+        const row = jsonData[i];
+        tableHTML += '<tr>';
+        for (let j = 0; j < row.length; j++) {
+          const cell = row[j] || '';
+          if (i === 0) {
+            tableHTML += `<th${j === 1 ? ' class="team-cell"' : ''}>${cell}</th>`;
+          } else {
+            tableHTML += `<td${j === 1 ? ' class="team-cell"' : ''}>${cell}</td>`;
+          }
+        }
+        tableHTML += '</tr>';
+      }
+      tableHTML += '</table>';
+      
+      contentArea.innerHTML = tableHTML;
+      contentArea.classList.add('has-content');
+    })
+    .catch(error => {
+      console.error('Błąd ładowania Excel:', error);
+      contentArea.innerHTML = '<div>Błąd ładowania danych z pliku Excel</div>';
+    });
 }
 
 function showMapDetails(chapterNum, seasonId, tournamentId, edition) {
@@ -1450,7 +1557,7 @@ function showChapters() {
   document.getElementById('back-button').style.display = 'none';
   
   // Przywróć oryginalny tytuł
-  document.getElementById('main-title').textContent = 'TOURNAMENT MAPS';
+  document.getElementById('main-title').textContent = '';
 }
 
 function goBack() {

@@ -242,6 +242,7 @@
     .season-content {
       display: none;
       animation: fadeIn 0.3s ease;
+      min-height: 650px;
     }
 
     .season-content.active {
@@ -449,7 +450,7 @@
       justify-content: center;
       align-items: center;
       width: 100%;
-      height: 120px; /* Increased from 80px */
+      height: 190px; /* Increased from 80px */
       margin: 0 auto;
       overflow: hidden;
       border-radius: 6px;
@@ -674,6 +675,60 @@
   color: #ffffff;
   font-family: 'Roboto', sans-serif;
 }
+
+.info-button {
+  position: fixed; /* Zmienione z absolute na fixed */
+  bottom: 20px;    /* Odległość od dołu ekranu */
+  right: 20px;     /* Odległość od prawej strony ekranu */
+  background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+  border: 2px solid #444;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffd700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+  z-index: 1001; /* Wysoky z-index żeby był nad wszystkim */
+}
+
+.info-button:hover {
+  border-color: #ffd700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  transform: scale(1.05);
+}
+
+/* Tooltip po lewej stronie */
+.info-tooltip {
+  position: absolute;
+  top: 50%;
+  right: 120%; /* Zmienione z left: 120% na right: 120% */
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+  border: 2px solid #ffd700;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: normal;
+  color: #fff;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+.info-button:hover .info-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(-5px); /* Zmienione kierunek przesunięcia */
+}
   </style>
 </head>
 <body>
@@ -696,6 +751,11 @@
       <a href="https://www.twitch.tv/kxrr0" target="_blank" class="social-link"><i class="fab fa-twitch"></i></a>
       <a href="https://discord.gg/zGuzHT6y" target="_blank" class="social-link"><i class="fab fa-discord"></i></a>
     </div>
+  </div>
+
+  <div class="info-button" id="infoButton">
+    i
+    <div class="info-tooltip">Teams’ placements in the tournaments will only count if the roster is identical to the one used in FNCS Globals.</div>
   </div>
 
   <h1>FNCS GLOBAL CHAMPIONSHIP 2025 TEAMS</h1>
@@ -1045,7 +1105,7 @@
         ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
         ch6s2: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
         ch6s3: { fncsPlacement: 4, div1Count: 1, bestDiv1: 31, div1Placements: ['31st'], dropSpot: 'Lonewolf Lair', dropSpotImg: 'LonewolfLair.png' },
-        ch6s4: { div1Count: 0, avgPlacement: '-', div1Placements: [], dropSpot: 'BURD To Go', dropSpotImg: 'BURDToGo.png' },
+        ch6s4: { div1Count: 0, avgPlacement: '-', div1Placements: [], dropSpot: 'Kappa Kappa Factory', dropSpotImg: 'KappaKappaFactory.png' },
         summary: { s1Fncs: '-', s2Fncs: '-', s3Fncs: '4th' }
       },
       'FOCUS MIKSON UPL': {
@@ -1082,7 +1142,7 @@
         ch6s1: { fncsPlacement: 2, div1Count: 5, bestDiv1: 1, div1Placements: ['1st', '1st', '1st', '1st', '1st'], dropSpot: 'Flooded Frogs', dropSpotImg: 'FloodedFrogs.png' },
         ch6s2: { fncsPlacement: 1, div1Count: 2, bestDiv1: 1, div1Placements: ['1st', '2nd'], dropSpot: 'Crime City', dropSpotImg: 'CrimeCity.png' },
         ch6s3: { fncsPlacement: 1, div1Count: 2, bestDiv1: 7, div1Placements: ['7th', '19th'], dropSpot: 'Brutal Boxcars', dropSpotImg: 'BrutalBoxcars.png' },
-        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['1st', '2nd'], dropSpot: 'O.X.R HQ', dropSpotImg: 'OXRHQ.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['1st', '2nd'], dropSpot: 'Dystopia City', dropSpotImg: 'DystopiaCity.jpg' },
         summary: { s1Fncs: '2nd', s2Fncs: '1st', s3Fncs: '1st' }
       },
       'CLIX EOMZO HIGGS': {
@@ -1126,21 +1186,21 @@
         ch6s1: { fncsPlacement: 1, div1Count: 4, bestDiv1: 1, div1Placements: ['1st', '1st', '3rd', '5th'], dropSpot: 'Masked Meadows', dropSpotImg: 'MaskedMeadows.png' },
         ch6s2: { fncsPlacement: 2, div1Count: 5, bestDiv1: 2, div1Placements: ['3rd', '17th', '9th', '14th', '2nd'], dropSpot: 'Masked Meadows', dropSpotImg: 'MaskedMeadows.png' },
         ch6s3: { fncsPlacement: 1, div1Count: 2, bestDiv1: 7, div1Placements: ['7th', '10th'], dropSpot: 'Demons Domain', dropSpotImg: 'DemonsDomain.png' },
-        ch6s4: { div1Count: 0, avgPlacement: '-', div1Placements: [], dropSpot: 'Rolling Blossoms Farm', dropSpotImg: 'RollingBlossomsFarm.png' },
+        ch6s4: { div1Count: 1, avgPlacement: '-', div1Placements: ['4th'], dropSpot: 'Pumpin Pipes', dropSpotImg: 'PumpinPipes.png' },
         summary: { s1Fncs: '1st', s2Fncs: '2nd', s3Fncs: '1st' }
       },
       'ARK SALKO SXHOOL': {
         ch6s1: { fncsPlacement: 3, div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: 'Nightshift Forest', dropSpotImg: 'NightshiftForest.png' },
         ch6s2: { fncsPlacement: 1, div1Count: 5, bestDiv1: 1, div1Placements: ['1st', '3rd', '4th', '7th', '3rd'], dropSpot: 'Shiny Shafts', dropSpotImg: 'ShinyShafts.png' },
         ch6s3: { fncsPlacement: 2, div1Count: 1, bestDiv1: 2, div1Placements: ['2nd'], dropSpot: 'Supernova Academy', dropSpotImg: 'SupernovaAcademy.png' },
-        ch6s4: { div1Count: 0, avgPlacement: '-', div1Placements: [], dropSpot: 'Shiny Shafts', dropSpotImg: 'ShinyShafts.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['1st', '5th'], dropSpot: 'Shiny Shafts', dropSpotImg: 'ShinyShafts.png' },
         summary: { s1Fncs: '3rd', s2Fncs: '1st', s3Fncs: '2nd' }
       },
       'EPIKWHALE PAPER VICTERV': {
         ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
         ch6s2: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
         ch6s3: { fncsPlacement: 3, div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: 'Utopia City', dropSpotImg: 'UtopiaCity.png' },
-        ch6s4: { div1Count: 0, avgPlacement: '-', div1Placements: [], dropSpot: 'Utopia City', dropSpotImg: 'UtopiaCity.png' },
+        ch6s4: { div1Count: 0, avgPlacement: '-', div1Placements: [], dropSpot: 'Dystopia City', dropSpotImg: 'DystopiaCity.jpg' },
         summary: { s1Fncs: '-', s2Fncs: '-', s3Fncs: '3rd' }
       },
 
@@ -1172,7 +1232,7 @@
         ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
         ch6s2: { fncsPlacement: 1, div1Count: 5, bestDiv1: 1, div1Placements: ['4th', '2nd', '1st', '1st', '1st'], dropSpot: 'Shiny Shafts', dropSpotImg: 'ShinyShafts.png' },
         ch6s3: { fncsPlacement: 1, div1Count: 2, bestDiv1: 1, div1Placements: ['1st', '2nd'], dropSpot: 'Demons Domain', dropSpotImg: 'DemonsDomain.png' },
-        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['6th', '7th'], dropSpot: 'Utopia City', dropSpotImg: 'UtopiaCity.png' },
+        ch6s4: { div1Count: 2, avgPlacement: '-', div1Placements: ['6th', '7th'], dropSpot: 'Lakeside Lab', dropSpotImg: 'LakesideLab.png' },
         summary: { s1Fncs: '-', s2Fncs: '1st', s3Fncs: '1st' }
       },
       'TINKA CAZI ASPECT': {
@@ -1222,10 +1282,10 @@
         summary: { s1Fncs: '1st', s2Fncs: '4th', s3Fncs: '1st' }
       },
       'RAITO RAZL TEITEI': {
-        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: ['-', '-', '-', '-', '-'], dropSpot: '-', dropSpotImg: 'blank.png' },
+        ch6s1: { fncsPlacement: '-', div1Count: '-', bestDiv1: '-', div1Placements: [], dropSpot: '-', dropSpotImg: 'blank.png' },
         ch6s2: { fncsPlacement: 1, div1Count: 3, bestDiv1: 4, div1Placements: ['4th', '4th', '15th'], dropSpot: 'Masked Meadows', dropSpotImg: 'MaskedMeadows.png' },
         ch6s3: { fncsPlacement: 2, div1Count: 1, bestDiv1: 19, div1Placements: ['19th'], dropSpot: 'Supernova Academy', dropSpotImg: 'SupernovaAcademy.png' },
-        ch6s4: { div1Count: 2, avgPlacement: 0, div1Placements: ['9th', '2nd'], dropSpot: 'Utopia City', dropSpotImg: 'UtopiaCity.png' },
+        ch6s4: { div1Count: 2, avgPlacement: 0, div1Placements: ['9th', '2nd'], dropSpot: 'Dystopia City', dropSpotImg: 'DystopiaCity.jpg' },
         summary: { s1Fncs: '-', s2Fncs: '1st', s3Fncs: '2nd' }
       },
       'MEREM BUYURIRU WICKESY': {
